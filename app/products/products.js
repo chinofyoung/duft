@@ -61,15 +61,6 @@ export default function Products() {
                       <AiOutlineRight className="ml-auto ui-open:rotate-90 ui-open:transform" />
                     </Disclosure.Button>
                     <Disclosure.Panel className="w-full rounded-md flex flex-col justify-end">
-                      <div className="flex flex-col gap-2 border-y p-2 my-2">
-                        <span>Ingredients:</span>
-                        <ul className="text-xs flex flex-col gap-1 text-slate-700">
-                          <li className="flex justify-between" key="">
-                            <span>Milk Essence</span>
-                            <span className="font-bold">180ml</span>
-                          </li>
-                        </ul>
-                      </div>
                       <div className="flex self-end gap-2">
                         <Button label="Edit" secondary={false} />
                         <button

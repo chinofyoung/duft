@@ -1,5 +1,4 @@
 "use client";
-import Image from "next/image";
 import React, { useState, useEffect } from "react";
 import { message, Progress } from "antd";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
@@ -12,17 +11,17 @@ import {
   orderBy,
 } from "firebase/firestore";
 import { db, storage } from "../firebase";
+import { UserAuth } from "../context/auth-context";
+import Image from "next/image";
 import Padded from "../layout/padded";
 import MainHeading from "../layout/main-heading";
 import SubHeading from "../layout/sub-heading";
 import FlexCol from "../layout/flex-col";
 import Card from "../layout/card";
-import { UserAuth } from "../context/auth-context";
 
 export default function RecordExpense() {
   const [imageFile, setImageFile] = useState("");
   const [downloadURL, setDownloadURL] = useState("");
-  const [isUploading, setIsUploading] = useState(false);
   const [progressUpload, setProgressUpload] = useState(0);
   const { user } = UserAuth();
   const [expenses, setExpenses] = useState([]);
@@ -222,7 +221,6 @@ export default function RecordExpense() {
                   )}
                   <FlexCol>
                     <button
-                      // loading={isUploading}
                       onClick={handleRemoveFile}
                       className="rounded-md px-5 py-2.5 text-white text-center text-xs bg-neutral-500"
                     >
@@ -230,7 +228,6 @@ export default function RecordExpense() {
                     </button>
 
                     <button
-                      // loading={isUploading}
                       onClick={handleUploadFile}
                       className="rounded-md px-5 py-2.5 text-white text-center text-xs bg-blue-500"
                     >
@@ -274,7 +271,11 @@ export default function RecordExpense() {
                       <div className="w-24 h-24 rounded-lg overflow-hidden">
                         <Image
                           className="object-cover"
-                          src={expense.image}
+                          src={
+                            expense.image
+                              ? expense.image
+                              : "https://placehold.co/96x96"
+                          }
                           width={100}
                           height={100}
                         />

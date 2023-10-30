@@ -11,6 +11,7 @@ import SubHeading from "../layout/sub-heading";
 export default function AddProduct() {
   const [newItem, setNewItem] = useState({
     name: "",
+    price: "",
     image: "",
   });
 
@@ -20,10 +21,11 @@ export default function AddProduct() {
     if (newItem.name !== "") {
       await addDoc(collection(db, "items"), {
         name: newItem.name.trim(),
+        price: newItem.price,
         image: newItem.image,
         createdAt: serverTimestamp(),
       });
-      setNewItem({ name: "", image: "" });
+      setNewItem({ name: "", price: "", image: "" });
     }
   };
 
@@ -48,6 +50,15 @@ export default function AddProduct() {
                   placeholder="Name"
                 />
                 <input
+                  value={newItem.price}
+                  onChange={(e) =>
+                    setNewItem({ ...newItem, price: e.target.value })
+                  }
+                  className="text-sm border w-full px-5 py-2.5 rounded-md"
+                  type="number"
+                  placeholder="Price"
+                />
+                <input
                   value={newItem.image}
                   onChange={(e) =>
                     setNewItem({ ...newItem, image: e.target.value })
@@ -56,22 +67,6 @@ export default function AddProduct() {
                   type="text"
                   placeholder="Image"
                 />
-                <div className="grid grid-cols-3 gap-2">
-                  <input
-                    className="text-sm border w-full px-5 py-2.5 rounded-md col-span-2"
-                    type="text"
-                    placeholder="Ingredient"
-                  />
-                  <input
-                    className="text-sm border w-full px-5 py-2.5 rounded-md"
-                    type="number"
-                    placeholder="Quantity"
-                  />
-                </div>
-                <button className="text-xs flex items-center gap-2 self-center">
-                  <AiFillPlusCircle className="text-3xl text-slate-600" />
-                  <span className="text-slate-600">Add ingredient</span>
-                </button>
                 <button
                   onClick={addItem}
                   className="rounded-md px-5 py-2.5 text-white text-center text-xs bg-red-500"
