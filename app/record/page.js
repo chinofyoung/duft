@@ -1,11 +1,8 @@
 "use client";
 import React from "react";
 import { Tab } from "@headlessui/react";
-import Padded from "../layout/padded";
-import MainHeading from "../layout/main-heading";
-import SubHeading from "../layout/sub-heading";
-import FlexCol from "../layout/flex-col";
 import RecordProduct from "./record-product";
+import RecordExpense from "./record-expense";
 
 export default function Page() {
   return (
@@ -38,7 +35,9 @@ export default function Page() {
         <Tab.Panel>
           <RecordProduct />
         </Tab.Panel>
-        <Tab.Panel>Content 2</Tab.Panel>
+        <Tab.Panel>
+          <RecordExpense />
+        </Tab.Panel>
       </Tab.Panels>
     </Tab.Group>
   );

@@ -134,7 +134,7 @@ export default function RecordProduct() {
               onClick={addSale}
               className="rounded-md px-5 py-2.5 text-white text-center text-xs bg-red-500"
             >
-              Save
+              Record
             </button>
           </FlexCol>
         </Card>

@@ -1,5 +1,8 @@
 "use client";
+import Image from "next/image";
 import React, { useState, useEffect } from "react";
+import { message, Progress } from "antd";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import {
   collection,
   addDoc,
@@ -8,7 +11,7 @@ import {
   onSnapshot,
   orderBy,
 } from "firebase/firestore";
-import { db } from "../firebase";
+import { db, storage } from "../firebase";
 import Padded from "../layout/padded";
 import MainHeading from "../layout/main-heading";
 import SubHeading from "../layout/sub-heading";
@@ -17,68 +20,121 @@ import Card from "../layout/card";
 import { UserAuth } from "../context/auth-context";
 
 export default function RecordExpense() {
+  const [imageFile, setImageFile] = useState("");
+  const [downloadURL, setDownloadURL] = useState("");
+  const [isUploading, setIsUploading] = useState(false);
+  const [progressUpload, setProgressUpload] = useState(0);
   const { user } = UserAuth();
-  const [items, setItems] = useState([]);
-  const [sales, setSales] = useState([]);
-  const [newSale, setNewSale] = useState({
-    product: "",
-    quantity: "",
+  const [expenses, setExpenses] = useState([]);
+  const [newExpense, setNewExpense] = useState({
+    name: "",
+    cost: "",
+    description: "",
+    reference: "",
+    image: "",
   });
 
-  // add sale to database
-  const addSale = async (e) => {
+  const handleSelectedFile = (files) => {
+    if (files && files[0].size < 10000000) {
+      setImageFile(files[0]);
+
+      console.log(files[0]);
+    } else {
+      message.error("File size to large");
+    }
+  };
+
+  const handleUploadFile = () => {
+    if (imageFile) {
+      const name = imageFile.name;
+      const storageRef = ref(storage, `image/${name}`);
+      const uploadTask = uploadBytesResumable(storageRef, imageFile);
+
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+
+          setProgressUpload(progress); // to show progress upload
+
+          switch (snapshot.state) {
+            case "paused":
+              console.log("Upload is paused");
+              break;
+            case "running":
+              console.log("Upload is running");
+              break;
+          }
+        },
+        (error) => {
+          message.error(error.message);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+            //url is download url of file
+            setDownloadURL(url);
+          });
+        }
+      );
+    } else {
+      message.error("File not found");
+    }
+  };
+
+  const handleRemoveFile = () => setImageFile(undefined);
+
+  // add expense to database
+  const addExpense = async (e) => {
     e.preventDefault();
-    if (user && newSale.product !== "" && newSale.quantity !== "") {
-      await addDoc(collection(db, "sales"), {
-        product: newSale.product,
-        quantity: newSale.quantity,
+    if (user && newExpense.name !== "" && newExpense.cost !== "") {
+      await addDoc(collection(db, "expenses"), {
+        name: newExpense.name,
+        cost: newExpense.cost,
+        description: newExpense.description,
+        reference: newExpense.reference,
+        image: downloadURL,
         createdAt: serverTimestamp(),
         uid: user.uid,
+      });
+      setNewExpense({
+        name: "",
+        cost: "",
+        description: "",
+        reference: "",
+        image: "",
       });
     }
   };
 
-  // read items from database
-  useEffect(() => {
-    const q = query(collection(db, "items"));
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      let itemsArr = [];
-
-      querySnapshot.forEach((doc) => {
-        itemsArr.push({ ...doc.data(), id: doc.id });
-      });
-      setItems(itemsArr);
-    });
-  }, []);
-
-  // read sales from database
+  // read expenses from database
   useEffect(() => {
     const q = query(
-      collection(db, "sales"),
+      collection(db, "expenses"),
       orderBy("createdAt", "desc")
       // limit(5)
     );
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      let salesArr = [];
+      let expenseArr = [];
 
       querySnapshot.forEach((doc) => {
-        salesArr.push({ ...doc.data(), id: doc.id });
+        expenseArr.push({ ...doc.data(), id: doc.id });
       });
-      setSales(salesArr);
+      setExpenses(expenseArr);
     });
   }, []);
 
   function renderTotal() {
-    const salesLength = parseInt(sales.length);
-    var totalSales = 0;
+    const expenseLength = parseInt(expenses.length);
+    var totalExpenses = 0;
 
-    for (let i = 0; i < salesLength; i++) {
-      totalSales = parseInt(sales[i]?.quantity) + totalSales;
+    for (let i = 0; i < expenseLength; i++) {
+      totalExpenses = parseInt(expenses[i]?.cost) + totalExpenses;
     }
 
     return (
-      <span className="text-base text-neutral-600 font-bold">
-        {totalSales} cups sold
+      <span className="text-base text-neutral-600">
+        ₱<strong>{totalExpenses.toLocaleString("en-US")}</strong>
       </span>
     );
   }
@@ -97,73 +153,150 @@ export default function RecordExpense() {
   return (
     <Padded>
       <FlexCol>
-        <MainHeading>Record</MainHeading>
+        <MainHeading>Record Expenses</MainHeading>
         <Card>
-          <SubHeading>Sales</SubHeading>
+          <SubHeading>Expenses</SubHeading>
           <div className="mt-2"></div>
           <FlexCol>
-            <select
-              className="border rounded-md py-2.5 px-4 text-neutral-700"
-              onChange={(e) =>
-                setNewSale({ ...newSale, product: e.target.value })
-              }
-            >
-              <option value="" disabled>
-                Select a product
-              </option>
-              {!items
-                ? "loading"
-                : items.map((item, index) => {
-                    return (
-                      <option key={index} value={item.name}>
-                        {item.name}
-                      </option>
-                    );
-                  })}
-            </select>
             <input
-              value={newSale.quantity}
+              value={newExpense.name}
               onChange={(e) =>
-                setNewSale({ ...newSale, quantity: e.target.value })
+                setNewExpense({ ...newExpense, name: e.target.value })
+              }
+              className="text-sm border w-full px-5 py-2.5 rounded-md"
+              type="text"
+              placeholder="Name"
+            />
+            <textarea
+              value={newExpense.description}
+              onChange={(e) =>
+                setNewExpense({ ...newExpense, description: e.target.value })
+              }
+              className="text-sm border w-full px-5 py-2.5 rounded-md"
+              type="textarea"
+              placeholder="Description"
+            />
+            <input
+              value={newExpense.cost}
+              onChange={(e) =>
+                setNewExpense({ ...newExpense, cost: e.target.value })
               }
               className="text-sm border w-full px-5 py-2.5 rounded-md"
               type="number"
-              placeholder="Quantity"
+              placeholder="Cost"
             />
+            <input
+              value={newExpense.reference}
+              onChange={(e) =>
+                setNewExpense({ ...newExpense, reference: e.target.value })
+              }
+              className="text-sm border w-full px-5 py-2.5 rounded-md"
+              type="number"
+              placeholder="Reference No."
+            />
+
+            {imageFile ? (
+              ""
+            ) : (
+              <input
+                className="border-none bg-slate-200 rounded-md"
+                type="file"
+                accept="image/*"
+                onChange={(files) => handleSelectedFile(files.target.files)}
+              />
+            )}
+
+            {imageFile && (
+              <>
+                <div className="flex justify-between">
+                  {downloadURL && (
+                    <div className="w-24 h-24 rounded-lg overflow-hidden">
+                      <Image
+                        className="object-cover border border-solid rounded-lg"
+                        src={downloadURL}
+                        alt={downloadURL}
+                        width={100}
+                        height={100}
+                      />
+                    </div>
+                  )}
+                  <FlexCol>
+                    <button
+                      loading={isUploading}
+                      type="primary"
+                      onClick={handleRemoveFile}
+                      className="rounded-md px-5 py-2.5 text-white text-center text-xs bg-neutral-500"
+                    >
+                      Remove
+                    </button>
+
+                    <button
+                      loading={isUploading}
+                      type="primary"
+                      onClick={handleUploadFile}
+                      className="rounded-md px-5 py-2.5 text-white text-center text-xs bg-blue-500"
+                    >
+                      Upload
+                    </button>
+
+                    <Progress percent={progressUpload} />
+                  </FlexCol>
+                </div>
+
+                {/* <div>
+                    <span className="text-xs">{imageFile.name}</span>
+                    <span className="text-xs">Size: {imageFile.size}</span>
+                  </div> */}
+              </>
+            )}
+
             <button
-              onClick={addSale}
+              onClick={addExpense}
               className="rounded-md px-5 py-2.5 text-white text-center text-xs bg-red-500"
             >
-              Save
+              Request
             </button>
           </FlexCol>
         </Card>
-
         <Card>
-          <SubHeading>Total Sales</SubHeading>
+          <SubHeading>Total Expenses</SubHeading>
           {renderTotal()}
         </Card>
-
         <Card>
-          <SubHeading>Sold Items</SubHeading>
+          <SubHeading>Expenses</SubHeading>
           <ul className="text-xs flex flex-col gap-1 text-slate-700 mt-2">
-            {!sales
+            {!expenses
               ? "loading"
-              : sales.map((sale, index) => {
+              : expenses.map((expense, index) => {
                   return (
                     <li
-                      className="flex justify-between items-start gap-2 bg-slate-100 p-2 rounded-md"
+                      className="flex gap-2 bg-slate-100 p-2 rounded-md"
                       key={index}
                     >
-                      <div className="flex gap-2">
-                        <span>{sale.product}</span>
-                        <span className="font-bold">x{sale.quantity}</span>
+                      <div className="w-24 h-24 rounded-lg overflow-hidden">
+                        <Image
+                          className="object-cover"
+                          src={expense.image}
+                          width={100}
+                          height={100}
+                        />
                       </div>
-                      <span className="ml-2 font-bold">
-                        {new Date(
-                          sale?.createdAt?.seconds * 1000
-                        ).toLocaleDateString("en-US")}
-                      </span>
+                      <div className="flex flex-col gap-2">
+                        <span className="text-sm font-bold">
+                          {expense.name}
+                        </span>
+                        <span>{expense.description}</span>
+                        <span>₱{expense.cost.toLocaleString("en-US")}</span>
+                        <span>Ref. # {expense.reference}</span>
+                        <div className="flex flex-col">
+                          <span>Date submitted:</span>
+                          <span>
+                            {new Date(
+                              expense?.createdAt?.seconds * 1000
+                            ).toLocaleDateString("en-US")}
+                          </span>
+                        </div>
+                      </div>
                     </li>
                   );
                 })}
