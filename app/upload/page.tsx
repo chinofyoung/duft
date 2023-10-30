@@ -75,8 +75,7 @@ const UploadImageToStorage = () => {
           {imageFile && (
             <>
               <button
-                loading={isUploading}
-                type="primary"
+                // loading={isUploading}
                 onClick={handleRemoveFile}
                 className="rounded-md px-5 py-2.5 text-white text-center text-xs bg-red-500"
               >
@@ -90,8 +89,8 @@ const UploadImageToStorage = () => {
 
               <div className="text-right mt-3">
                 <button
-                  loading={isUploading}
-                  type="primary"
+                  // loading={isUploading}
+                  // type="primary"
                   onClick={handleUploadFile}
                   className="rounded-md px-5 py-2.5 text-white text-center text-xs bg-red-500"
                 >

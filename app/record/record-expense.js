@@ -222,7 +222,7 @@ export default function RecordExpense() {
                   )}
                   <FlexCol>
                     <button
-                      loading={isUploading}
+                      // loading={isUploading}
                       onClick={handleRemoveFile}
                       className="rounded-md px-5 py-2.5 text-white text-center text-xs bg-neutral-500"
                     >
@@ -230,7 +230,7 @@ export default function RecordExpense() {
                     </button>
 
                     <button
-                      loading={isUploading}
+                      // loading={isUploading}
                       onClick={handleUploadFile}
                       className="rounded-md px-5 py-2.5 text-white text-center text-xs bg-blue-500"
                     >
