@@ -34,7 +34,7 @@ const Navigation = () => {
     checkAuthentication();
   }, [user]);
 
-  let nav = [
+  const nav = [
     {
       url: "/",
       label: "Home",

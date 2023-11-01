@@ -3,7 +3,7 @@ import { AiFillHome, AiOutlineDatabase } from "react-icons/ai";
 import { BsClipboard2Data, BsFillCartFill } from "react-icons/bs";
 
 export default function Footer() {
-  let nav = [
+  const nav = [
     {
       url: "/",
       label: "Home",
