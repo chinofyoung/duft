@@ -15,10 +15,10 @@ export default function Footer() {
       icon: <AiOutlineDatabase />,
     },
     {
-        url: "/products",
-        label: "Products",
-        icon: <BsFillCartFill />,
-      },
+      url: "/products",
+      label: "Products",
+      icon: <BsFillCartFill />,
+    },
     {
       url: "/reports",
       label: "Reports",
@@ -26,8 +26,8 @@ export default function Footer() {
     },
   ];
   return (
-    <div className="fixed bottom-0 bg-slate-900 flex h-16 items-center text-white w-full p-4">
-      <ul className="flex text-sm justify-around w-full">
+    <div className="fixed bottom-4 flex h-16 items-center text-white w-full p-4">
+      <ul className="flex text-sm justify-around w-full bg-slate-800 rounded-xl">
         {nav.map(function (nav, index) {
           return (
             <li key={index} className="">

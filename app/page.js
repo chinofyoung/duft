@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { UserAuth } from "./context/auth-context";
@@ -38,7 +38,7 @@ export default function Home() {
       url: "/reports",
       label: "Reports",
       icon: <BsClipboard2Data />,
-      disabled: true,
+      disabled: false,
     },
     {
       url: "/settings",
@@ -71,6 +71,25 @@ export default function Home() {
               />
             </div>
           </Card>
+
+          <div className="grid grid-cols-2 gap-2">
+            <Link
+              href="/record"
+              className="bg-slate-200 w-full rounded-lg text-neutral-700 p-4 flex flex-col gap-2"
+            >
+              <AiOutlineDatabase className="text-2xl" />
+              <strong>Record</strong>
+              <p className="text-xs">Record sales and expenses</p>
+            </Link>
+            <Link
+              href="/record"
+              className="bg-orange-500 w-full rounded-lg text-white p-4 flex flex-col gap-2"
+            >
+              <BsFillCartFill className="text-2xl" />
+              <strong>Products</strong>
+              <p className="text-xs">Add or edit existing products</p>
+            </Link>
+          </div>
           <div className="grid grid-cols-4 gap-4">
             {menu.map(function (menu, index) {
               return (
@@ -89,29 +108,71 @@ export default function Home() {
               );
             })}
           </div>
-          <Card>
-            <SubHeading>Sales</SubHeading>
-            <Padded>
-              <div className="flex flex-col text-slate-700">
-                <span>
-                  Total Sales: <strong>23,240</strong>
-                </span>
-                <span>
-                  Bottles Sold: <strong>87</strong>
-                </span>
+          <div className="gap-4 rounded-lg flex bg-slate-200 p-2 flex-col">
+            <div className="flex gap-2 text-xs mt-2">
+              <a
+                href=""
+                className="text-slate-700 bg-slate-300 px-4 py-1 flex items-center rounded-md"
+              >
+                Day
+              </a>
+              <a
+                href=""
+                className="text-white bg-slate-600 px-4 py-1 flex items-center rounded-md font-bold"
+              >
+                Month
+              </a>
+              <a
+                href=""
+                className="text-slate-700 bg-slate-300 px-4 py-1 flex items-center rounded-md"
+              >
+                Year
+              </a>
+            </div>
+            <div className="grid grid-cols-2 gap-2">
+              <div className="bg-lime-600 rounded-md p-4 shadow-sm">
+                <h3 className="text-lg text-white">Sales</h3>
+                <div className="flex flex-col text-white">
+                  <span className="text-xs">
+                    Gross Sales: <strong>23,240</strong>
+                  </span>
+                  <span className="text-xs">
+                    Bottles Sold: <strong>87</strong>
+                  </span>
+                  <span className="text-xs">
+                    Net Profit: <strong>15,240</strong>
+                  </span>
+                </div>
               </div>
-            </Padded>
-          </Card>
-          <Card>
-            <SubHeading>Expenses</SubHeading>
-            <Padded>
-              <div className="flex flex-col text-slate-700">
-                <span>
-                  Total Expenses: <strong>23,240</strong>
-                </span>
+              <div className="bg-red-500 rounded-md p-4 shadow-sm">
+                <h3 className="text-lg text-white">Expenses</h3>
+                <div className="flex flex-col text-white">
+                  <span className="text-xs">
+                    Total Expenses: <strong>13,240</strong>
+                  </span>
+                </div>
               </div>
-            </Padded>
-          </Card>
+              <div className="bg-cyan-500 rounded-md p-4 shadow-sm">
+                <h3 className="text-lg text-white">Inventory</h3>
+                <div className="flex flex-col text-white">
+                  <span className="text-xs">
+                    Men: <strong>395</strong>
+                  </span>
+                  <span className="text-xs">
+                    Women: <strong>298</strong>
+                  </span>
+                </div>
+              </div>
+              <div className="bg-teal-500 rounded-md p-4 shadow-sm">
+                <h3 className="text-lg text-white">Receivables</h3>
+                <div className="flex flex-col text-white">
+                  <span className="text-xs">
+                    Total: <strong>16,430</strong>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
         </FlexCol>
       ) : (
         <div>Please Login</div>

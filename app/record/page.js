@@ -16,8 +16,8 @@ export default function Page() {
             {({ selected }) => (
               <button
                 className={`${
-                  selected ? "bg-slate-700 text-white" : "bg-slate-200"
-                }  w-full p-4 rounded-l-lg`}
+                  selected ? "bg-slate-600 text-white" : "bg-slate-200"
+                }  w-full py-2 rounded-l-lg`}
               >
                 Sales
               </button>
@@ -27,8 +27,8 @@ export default function Page() {
             {({ selected }) => (
               <button
                 className={`${
-                  selected ? "bg-slate-700 text-white" : "bg-slate-200"
-                }  w-full p-4 rounded-r-lg`}
+                  selected ? "bg-slate-600 text-white" : "bg-slate-200"
+                }  w-full py-2 rounded-r-lg`}
               >
                 Expenses
               </button>

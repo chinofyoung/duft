@@ -18,7 +18,7 @@ export default function RootLayout({ children }) {
       </head>
       <body className={`${inter.className} bg-slate-100`}>
         <Suspense fallback={<Loading />}>
-          <main className="pb-16">
+          <main className="pb-20 w-full">
             <AuthContextProvider>
               <Navigation />
               {children}
