@@ -16,7 +16,10 @@ export default function Sales({ sale }) {
           <span>{sale.product}</span>
           <span className="font-bold">x{sale.quantity}</span>
         </div>
-        <small>{user.displayName}</small>
+        <div className="flex items-center gap-2">
+          <img className="w-6 h-6 rounded-full" src={user.photoURL} />
+          <span className="font-bold">{user.displayName}</span>
+        </div>
       </div>
       <span className="ml-2 font-bold">
         {new Date(sale?.createdAt?.seconds * 1000).toLocaleDateString("en-US")}

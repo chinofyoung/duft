@@ -18,9 +18,8 @@ import MainHeading from "../layout/main-heading";
 import SubHeading from "../layout/sub-heading";
 import FlexCol from "../layout/flex-col";
 import Card from "../layout/card";
-import { Disclosure } from "@headlessui/react";
-import { AiOutlineRight } from "react-icons/ai";
 import Confirmation from "../components/confirmation";
+import Expense from "./expense";
 
 export default function RecordExpense() {
   let [isOpen, setIsOpen] = useState(false);
@@ -271,77 +270,7 @@ export default function RecordExpense() {
           {!expenses
             ? "loading"
             : expenses.map((expense, index) => {
-                return (
-                  <li
-                    className="flex flex-col gap-2 bg-slate-100 p-2 pr-4 rounded-md"
-                    key={index}
-                  >
-                    <Disclosure>
-                      <Disclosure.Button>
-                        <div className="flex items-center gap-4">
-                          <div className="w-12 h-12 rounded-lg overflow-hidden">
-                            <Image
-                              className="object-cover"
-                              alt="Default photo"
-                              src={
-                                expense.image
-                                  ? expense.image
-                                  : "https://placehold.co/96x96"
-                              }
-                              width={48}
-                              height={48}
-                            />
-                          </div>
-                          <span className="text-sm font-bold">
-                            {expense.name}
-                          </span>
-                          <AiOutlineRight className="ml-auto text-base ui-open:rotate-90 ui-open:transform" />
-                        </div>
-                      </Disclosure.Button>
-                      <Disclosure.Panel>
-                        <div className="grid grid-cols-2 gap-2 p-2 border-t border-solid">
-                          <div className="flex flex-col">
-                            <strong>Description:</strong>
-                            {expense.description}
-                          </div>
-                          <div className="flex flex-col">
-                            <strong>Cost:</strong>₱
-                            {expense.cost.toLocaleString("en-US")}
-                          </div>
-                          <div className="flex flex-col">
-                            <strong>Reference #</strong>
-                            <span>{expense.reference}</span>
-                          </div>
-                          <div className="flex flex-col">
-                            <strong>Date submitted:</strong>
-                            <span>
-                              {new Date(
-                                expense?.createdAt?.seconds * 1000
-                              ).toLocaleDateString("en-US")}
-                            </span>
-                          </div>
-                          <div className="flex justify-between items-center col-span-2 border-t border-solid pt-2">
-                            <div className="flex flex-col">
-                              <strong>Status:</strong>
-                              <span>Pending</span>
-                            </div>
-
-                            <div className="flex gap-2">
-                              <img
-                                className="w-8 h-8 rounded-full"
-                                src="https://thispersondoesnotexist.com/"
-                              />
-                              <img
-                                className="w-8 h-8 rounded-full opacity-50"
-                                src="https://thispersondoesnotexist.com/"
-                              />
-                            </div>
-                          </div>
-                        </div>
-                      </Disclosure.Panel>
-                    </Disclosure>
-                  </li>
-                );
+                return <Expense expense={expense} key={`expense-${index}`} />;
               })}
         </ul>
       </Card>
