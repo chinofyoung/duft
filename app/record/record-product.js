@@ -7,7 +7,6 @@ import {
   query,
   onSnapshot,
   orderBy,
-  documentId,
 } from "firebase/firestore";
 import { db } from "../firebase";
 import Padded from "../layout/padded";
@@ -17,6 +16,7 @@ import FlexCol from "../layout/flex-col";
 import Card from "../layout/card";
 import { UserAuth } from "../context/auth-context";
 import Confirmation from "../components/confirmation";
+import Sales from "./sales";
 
 export default function RecordProduct() {
   let [isOpen, setIsOpen] = useState(false);
@@ -153,22 +153,7 @@ export default function RecordProduct() {
           {!sales
             ? "loading"
             : sales.slice(0, 5).map((sale, index) => {
-                return (
-                  <li
-                    className="flex justify-between items-start gap-2 bg-slate-100 p-2 rounded-md"
-                    key={index}
-                  >
-                    <div className="flex gap-2">
-                      <span>{sale.product}</span>
-                      <span className="font-bold">x{sale.quantity}</span>
-                    </div>
-                    <span className="ml-2 font-bold">
-                      {new Date(
-                        sale?.createdAt?.seconds * 1000
-                      ).toLocaleDateString("en-US")}
-                    </span>
-                  </li>
-                );
+                return <Sales sale={sale} key={`sales-${index}`} />;
               })}
         </ul>
       </Card>

@@ -7,6 +7,7 @@ import Card from "./layout/card";
 import Stats from "./dashboard/stats";
 import LargeLinks from "./dashboard/large-links";
 import SmallLinks from "./dashboard/small-links";
+import Login from "./components/login";
 
 export default function Home() {
   const { user } = UserAuth();
@@ -50,7 +51,7 @@ export default function Home() {
           <Stats />
         </>
       ) : (
-        <div>Please Login</div>
+        <Login />
       )}
     </>
   );
