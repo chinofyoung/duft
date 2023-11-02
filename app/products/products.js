@@ -13,8 +13,10 @@ import { AiOutlineRight } from "react-icons/ai";
 import Card from "../layout/card";
 import Button from "../layout/button";
 import SubHeading from "../layout/sub-heading";
+import Confirmation from "../components/confirmation";
 
 export default function Products() {
+  let [isOpen, setIsOpen] = useState(false);
   const [items, setItems] = useState([]);
 
   // read items from database
@@ -32,11 +34,17 @@ export default function Products() {
 
   // delete items from database
   const deleteItem = async (id) => {
+    setIsOpen(true);
     await deleteDoc(doc(db, "items", id));
   };
 
   return (
     <Card>
+      <Confirmation
+        openDialog={isOpen}
+        heading="Product deleted!"
+        message="Product has been successfully deleted!"
+      />
       <SubHeading>Products</SubHeading>
       <ul className="flex flex-col gap-2 mt-4">
         {!items

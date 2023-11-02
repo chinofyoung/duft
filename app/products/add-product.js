@@ -7,8 +7,11 @@ import { AiOutlineRight } from "react-icons/ai";
 import Card from "../layout/card";
 import FlexCol from "../layout/flex-col";
 import SubHeading from "../layout/sub-heading";
+import Confirmation from "../components/confirmation";
 
 export default function AddProduct() {
+  let [isOpen, setIsOpen] = useState(false);
+
   const [newItem, setNewItem] = useState({
     name: "",
     price: "",
@@ -20,6 +23,7 @@ export default function AddProduct() {
   const addItem = async (e) => {
     e.preventDefault();
     if (newItem.name !== "") {
+      setIsOpen(true);
       await addDoc(collection(db, "items"), {
         name: newItem.name.trim(),
         price: newItem.price,
@@ -33,6 +37,11 @@ export default function AddProduct() {
 
   return (
     <Card>
+      <Confirmation
+        openDialog={isOpen}
+        heading="Product Added!"
+        message="Product has successfully been added!"
+      />
       <Disclosure>
         <FlexCol>
           <Disclosure.Button className="flex justify-between items-center">
@@ -82,7 +91,7 @@ export default function AddProduct() {
                   onClick={addItem}
                   className="rounded-md px-5 py-2.5 text-white text-center text-xs bg-red-500"
                 >
-                  Save
+                  Add
                 </button>
               </FlexCol>
             </form>
