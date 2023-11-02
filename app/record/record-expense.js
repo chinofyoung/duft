@@ -35,6 +35,7 @@ export default function RecordExpense() {
     description: "",
     reference: "",
     image: "",
+    approved: false,
   });
 
   const handleSelectedFile = (files) => {
@@ -100,6 +101,7 @@ export default function RecordExpense() {
         image: downloadURL,
         createdAt: serverTimestamp(),
         uid: user.uid,
+        approved: false,
       });
       setNewExpense({
         name: "",
