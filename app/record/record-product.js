@@ -111,6 +111,9 @@ export default function RecordProduct() {
               setNewSale({ ...newSale, product: e.target.value })
             }
           >
+            <option className="bg-red-500" disabled selected hidden>
+              Choose a product
+            </option>
             {!items
               ? "loading"
               : items.map((item, index) => {
@@ -149,7 +152,7 @@ export default function RecordProduct() {
         <ul className="text-xs flex flex-col gap-1 text-slate-700 mt-2">
           {!sales
             ? "loading"
-            : sales.map((sale, index) => {
+            : sales.slice(0, 5).map((sale, index) => {
                 return (
                   <li
                     className="flex justify-between items-start gap-2 bg-slate-100 p-2 rounded-md"
