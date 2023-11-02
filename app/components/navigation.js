@@ -76,9 +76,7 @@ const Navigation = () => {
               </span>
             </div>
           ) : (
-            <span className="text-slate-600 text-sm">
-              Hello, Guest!
-            </span>
+            <span className="text-slate-600 text-sm">Hello, Guest!</span>
           )}
           <button onClick={() => setOpenMenu(false)}>
             <AiFillCloseCircle className="text-3xl text-red-500" />

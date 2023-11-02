@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ProgressBar } from "react-loader-spinner";
 import { UserAuth } from "./context/auth-context";
 import Padded from "./layout/padded";
 import FlexCol from "./layout/flex-col";
@@ -14,12 +13,10 @@ import SubHeading from "./layout/sub-heading";
 
 export default function Home() {
   const { user } = UserAuth();
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const checkAuthentication = async () => {
       await new Promise((resolve) => setTimeout(resolve, 50));
-      setLoading(false);
     };
     checkAuthentication();
   }, [user]);
@@ -59,17 +56,7 @@ export default function Home() {
 
   return (
     <Padded>
-      {loading ? (
-        <div className="flex absolute inset-0 z-50 items-center justify-center bg-slate-800/95">
-          <ProgressBar
-            height="80"
-            width="80"
-            ariaLabel="progress-bar-loading"
-            borderColor="#fff"
-            barColor="#aaa"
-          />
-        </div>
-      ) : user ? (
+      {user ? (
         <FlexCol>
           <Card>
             <div className="flex overflow-hidden">
@@ -97,7 +84,9 @@ export default function Home() {
                   key={index}
                   href={menu.url}
                   className={`h-auto p-4 rounded-xl flex items-center justify-center border-2 border-solid flex-col gap-2 ${
-                    menu.disabled ? "bg-slate-200 border-slate-300 text-slate-300" : "border-slate-500  text-slate-700"
+                    menu.disabled
+                      ? "bg-slate-200 border-slate-300 text-slate-300"
+                      : "border-slate-500  text-slate-700"
                   }`}
                 >
                   <span className="text-2xl">{menu.icon}</span>
