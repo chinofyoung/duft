@@ -7,6 +7,7 @@ import {
   query,
   onSnapshot,
   orderBy,
+  documentId,
 } from "firebase/firestore";
 import { db } from "../firebase";
 import Padded from "../layout/padded";
@@ -15,8 +16,10 @@ import SubHeading from "../layout/sub-heading";
 import FlexCol from "../layout/flex-col";
 import Card from "../layout/card";
 import { UserAuth } from "../context/auth-context";
+import Confirmation from "../components/confirmation";
 
 export default function RecordProduct() {
+  let [isOpen, setIsOpen] = useState(false);
   const { user } = UserAuth();
   const [items, setItems] = useState([]);
   const [sales, setSales] = useState([]);
@@ -29,6 +32,7 @@ export default function RecordProduct() {
   const addSale = async (e) => {
     e.preventDefault();
     if (user && newSale.product !== "" && newSale.quantity !== "") {
+      setIsOpen(true);
       await addDoc(collection(db, "sales"), {
         product: newSale.product,
         quantity: newSale.quantity,
@@ -53,11 +57,7 @@ export default function RecordProduct() {
 
   // read sales from database
   useEffect(() => {
-    const q = query(
-      collection(db, "sales"),
-      orderBy("createdAt", "desc")
-      // limit(5)
-    );
+    const q = query(collection(db, "sales"), orderBy("createdAt", "desc"));
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       let salesArr = [];
 
@@ -97,6 +97,11 @@ export default function RecordProduct() {
   return (
     <FlexCol>
       <Card>
+        <Confirmation
+          openDialog={isOpen}
+          heading="Sales Added!"
+          message="Sales has successfully been recorded!"
+        />
         <SubHeading>Sales</SubHeading>
         <div className="mt-2"></div>
         <FlexCol>
@@ -106,9 +111,6 @@ export default function RecordProduct() {
               setNewSale({ ...newSale, product: e.target.value })
             }
           >
-            <option value="" disabled>
-              Select a product
-            </option>
             {!items
               ? "loading"
               : items.map((item, index) => {

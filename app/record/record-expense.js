@@ -20,8 +20,10 @@ import FlexCol from "../layout/flex-col";
 import Card from "../layout/card";
 import { Disclosure } from "@headlessui/react";
 import { AiOutlineRight } from "react-icons/ai";
+import Confirmation from "../components/confirmation";
 
 export default function RecordExpense() {
+  let [isOpen, setIsOpen] = useState(false);
   const [imageFile, setImageFile] = useState("");
   const [downloadURL, setDownloadURL] = useState("");
   const [progressUpload, setProgressUpload] = useState(0);
@@ -89,6 +91,7 @@ export default function RecordExpense() {
   const addExpense = async (e) => {
     e.preventDefault();
     if (user && newExpense.name !== "" && newExpense.cost !== "") {
+      setIsOpen(true);
       await addDoc(collection(db, "expenses"), {
         name: newExpense.name,
         cost: newExpense.cost,
@@ -153,6 +156,11 @@ export default function RecordExpense() {
 
   return (
     <FlexCol>
+      <Confirmation
+        openDialog={isOpen}
+        heading="Expense Added!"
+        message="Expense has successfully been recorded!"
+      />
       <Card>
         <SubHeading>Expenses</SubHeading>
         <div className="mt-2"></div>
@@ -274,6 +282,7 @@ export default function RecordExpense() {
                           <div className="w-12 h-12 rounded-lg overflow-hidden">
                             <Image
                               className="object-cover"
+                              alt="Default photo"
                               src={
                                 expense.image
                                   ? expense.image

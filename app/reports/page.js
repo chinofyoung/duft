@@ -65,15 +65,6 @@ export default function Page() {
     });
   }, []);
 
-  // const result = parseInt(sales.quantity).reduce(
-  //   (total, currentValue) => (total = total + currentValue.prix),
-  //   0
-  // );
-
-  // {
-  //   console.log(sales.length);
-  // }
-
   function renderTotal() {
     const salesLength = parseInt(sales.length);
     var totalSales = 0;
@@ -83,8 +74,8 @@ export default function Page() {
     }
 
     return (
-      <span className="text-base text-neutral-600 font-bold">
-        {totalSales} cups
+      <span className="text-sm text-neutral-600 font-bold">
+        {totalSales} perfumes sold
       </span>
     );
   }
@@ -95,10 +86,8 @@ export default function Page() {
         <MainHeading>Reports</MainHeading>
         <Card>
           <SubHeading>Summary</SubHeading>
-            <SubHeading>Total Sales</SubHeading>
-            {renderTotal()}
+          <span className="text-sm">Total Sales: {renderTotal()}</span>
         </Card>
-
         <Card>
           <SubHeading>Sold Items</SubHeading>
           <ul className="text-xs flex flex-col gap-1 text-slate-700 mt-2">

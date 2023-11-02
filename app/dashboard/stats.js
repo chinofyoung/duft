@@ -1,10 +1,10 @@
 export default function Stats() {
   return (
-    <div className="gap-4 rounded-lg flex bg-slate-200 p-2 flex-col">
+    <div className="gap-4 flex bg-slate-300 p-4 flex-col">
       <div className="flex gap-2 text-xs mt-2">
         <a
           href=""
-          className="text-slate-700 bg-slate-300 px-4 py-1 flex items-center rounded-md"
+          className="text-white bg-slate-400 px-4 py-1 flex items-center rounded-md"
         >
           Day
         </a>
@@ -16,7 +16,7 @@ export default function Stats() {
         </a>
         <a
           href=""
-          className="text-slate-700 bg-slate-300 px-4 py-1 flex items-center rounded-md"
+          className="text-white bg-slate-400 px-4 py-1 flex items-center rounded-md"
         >
           Year
         </a>
