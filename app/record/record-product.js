@@ -95,81 +95,78 @@ export default function RecordProduct() {
   }
 
   return (
-    <Padded>
-      <FlexCol>
-        <MainHeading>Record Sales</MainHeading>
-        <Card>
-          <SubHeading>Sales</SubHeading>
-          <div className="mt-2"></div>
-          <FlexCol>
-            <select
-              className="border rounded-md py-2.5 px-4 text-neutral-700"
-              onChange={(e) =>
-                setNewSale({ ...newSale, product: e.target.value })
-              }
-            >
-              <option value="" disabled>
-                Select a product
-              </option>
-              {!items
-                ? "loading"
-                : items.map((item, index) => {
-                    return (
-                      <option key={index} value={item.name}>
-                        {item.name}
-                      </option>
-                    );
-                  })}
-            </select>
-            <input
-              value={newSale.quantity}
-              onChange={(e) =>
-                setNewSale({ ...newSale, quantity: e.target.value })
-              }
-              className="text-sm border w-full px-5 py-2.5 rounded-md"
-              type="number"
-              placeholder="Quantity"
-            />
-            <button
-              onClick={addSale}
-              className="rounded-md px-5 py-2.5 text-white text-center text-xs bg-red-500"
-            >
-              Record
-            </button>
-          </FlexCol>
-        </Card>
-
-        <Card>
-          <SubHeading>Total Sales</SubHeading>
-          {renderTotal()}
-        </Card>
-
-        <Card>
-          <SubHeading>Sold Items</SubHeading>
-          <ul className="text-xs flex flex-col gap-1 text-slate-700 mt-2">
-            {!sales
+    <FlexCol>
+      <Card>
+        <SubHeading>Sales</SubHeading>
+        <div className="mt-2"></div>
+        <FlexCol>
+          <select
+            className="border rounded-md py-2.5 px-4 text-neutral-700"
+            onChange={(e) =>
+              setNewSale({ ...newSale, product: e.target.value })
+            }
+          >
+            <option value="" disabled>
+              Select a product
+            </option>
+            {!items
               ? "loading"
-              : sales.map((sale, index) => {
+              : items.map((item, index) => {
                   return (
-                    <li
-                      className="flex justify-between items-start gap-2 bg-slate-100 p-2 rounded-md"
-                      key={index}
-                    >
-                      <div className="flex gap-2">
-                        <span>{sale.product}</span>
-                        <span className="font-bold">x{sale.quantity}</span>
-                      </div>
-                      <span className="ml-2 font-bold">
-                        {new Date(
-                          sale?.createdAt?.seconds * 1000
-                        ).toLocaleDateString("en-US")}
-                      </span>
-                    </li>
+                    <option key={index} value={item.name}>
+                      {item.name}
+                    </option>
                   );
                 })}
-          </ul>
-        </Card>
-      </FlexCol>
-    </Padded>
+          </select>
+          <input
+            value={newSale.quantity}
+            onChange={(e) =>
+              setNewSale({ ...newSale, quantity: e.target.value })
+            }
+            className="text-sm border w-full px-5 py-2.5 rounded-md"
+            type="number"
+            placeholder="Quantity"
+          />
+          <button
+            onClick={addSale}
+            className="rounded-md px-5 py-2.5 text-white text-center text-xs bg-red-500"
+          >
+            Record
+          </button>
+        </FlexCol>
+      </Card>
+
+      <Card>
+        <SubHeading>Total Sales</SubHeading>
+        {renderTotal()}
+      </Card>
+
+      <Card>
+        <SubHeading>Sold Items</SubHeading>
+        <ul className="text-xs flex flex-col gap-1 text-slate-700 mt-2">
+          {!sales
+            ? "loading"
+            : sales.map((sale, index) => {
+                return (
+                  <li
+                    className="flex justify-between items-start gap-2 bg-slate-100 p-2 rounded-md"
+                    key={index}
+                  >
+                    <div className="flex gap-2">
+                      <span>{sale.product}</span>
+                      <span className="font-bold">x{sale.quantity}</span>
+                    </div>
+                    <span className="ml-2 font-bold">
+                      {new Date(
+                        sale?.createdAt?.seconds * 1000
+                      ).toLocaleDateString("en-US")}
+                    </span>
+                  </li>
+                );
+              })}
+        </ul>
+      </Card>
+    </FlexCol>
   );
 }

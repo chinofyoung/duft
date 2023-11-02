@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "../firebase";
 import { Disclosure } from "@headlessui/react";
-import { AiOutlineRight, AiFillPlusCircle } from "react-icons/ai";
+import { AiOutlineRight } from "react-icons/ai";
 import Card from "../layout/card";
 import FlexCol from "../layout/flex-col";
 import SubHeading from "../layout/sub-heading";
@@ -12,6 +12,7 @@ export default function AddProduct() {
   const [newItem, setNewItem] = useState({
     name: "",
     price: "",
+    quantity: "",
     image: "",
   });
 
@@ -22,10 +23,11 @@ export default function AddProduct() {
       await addDoc(collection(db, "items"), {
         name: newItem.name.trim(),
         price: newItem.price,
+        quantity: newItem.quantity,
         image: newItem.image,
         createdAt: serverTimestamp(),
       });
-      setNewItem({ name: "", price: "", image: "" });
+      setNewItem({ name: "", price: "", quantity: "", image: "" });
     }
   };
 
@@ -57,6 +59,15 @@ export default function AddProduct() {
                   className="text-sm border w-full px-5 py-2.5 rounded-md"
                   type="number"
                   placeholder="Price"
+                />
+                <input
+                  value={newItem.quantity}
+                  onChange={(e) =>
+                    setNewItem({ ...newItem, quantity: e.target.value })
+                  }
+                  className="text-sm border w-full px-5 py-2.5 rounded-md"
+                  type="number"
+                  placeholder="Quantity"
                 />
                 <input
                   value={newItem.image}

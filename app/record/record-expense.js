@@ -150,158 +150,153 @@ export default function RecordExpense() {
   }
 
   return (
-    <Padded>
-      <FlexCol>
-        <MainHeading>Record Expenses</MainHeading>
-        <Card>
-          <SubHeading>Expenses</SubHeading>
-          <div className="mt-2"></div>
-          <FlexCol>
-            <input
-              value={newExpense.name}
-              onChange={(e) =>
-                setNewExpense({ ...newExpense, name: e.target.value })
-              }
-              className="text-sm border w-full px-5 py-2.5 rounded-md"
-              type="text"
-              placeholder="Name"
-            />
-            <textarea
-              value={newExpense.description}
-              onChange={(e) =>
-                setNewExpense({ ...newExpense, description: e.target.value })
-              }
-              className="text-sm border w-full px-5 py-2.5 rounded-md"
-              type="textarea"
-              placeholder="Description"
-            />
-            <input
-              value={newExpense.cost}
-              onChange={(e) =>
-                setNewExpense({ ...newExpense, cost: e.target.value })
-              }
-              className="text-sm border w-full px-5 py-2.5 rounded-md"
-              type="number"
-              placeholder="Cost"
-            />
-            <input
-              value={newExpense.reference}
-              onChange={(e) =>
-                setNewExpense({ ...newExpense, reference: e.target.value })
-              }
-              className="text-sm border w-full px-5 py-2.5 rounded-md"
-              type="number"
-              placeholder="Reference No."
-            />
+    <FlexCol>
+      <Card>
+        <SubHeading>Expenses</SubHeading>
+        <div className="mt-2"></div>
+        <FlexCol>
+          <input
+            value={newExpense.name}
+            onChange={(e) =>
+              setNewExpense({ ...newExpense, name: e.target.value })
+            }
+            className="text-sm border w-full px-5 py-2.5 rounded-md"
+            type="text"
+            placeholder="Name"
+          />
+          <textarea
+            value={newExpense.description}
+            onChange={(e) =>
+              setNewExpense({ ...newExpense, description: e.target.value })
+            }
+            className="text-sm border w-full px-5 py-2.5 rounded-md"
+            type="textarea"
+            placeholder="Description"
+          />
+          <input
+            value={newExpense.cost}
+            onChange={(e) =>
+              setNewExpense({ ...newExpense, cost: e.target.value })
+            }
+            className="text-sm border w-full px-5 py-2.5 rounded-md"
+            type="number"
+            placeholder="Cost"
+          />
+          <input
+            value={newExpense.reference}
+            onChange={(e) =>
+              setNewExpense({ ...newExpense, reference: e.target.value })
+            }
+            className="text-sm border w-full px-5 py-2.5 rounded-md"
+            type="number"
+            placeholder="Reference No."
+          />
 
-            {imageFile ? (
-              ""
-            ) : (
-              <input
-                className="border-none bg-slate-200 rounded-md"
-                type="file"
-                accept="image/*"
-                onChange={(files) => handleSelectedFile(files.target.files)}
-              />
-            )}
+          {imageFile ? (
+            ""
+          ) : (
+            <input
+              className="border-none bg-slate-200 rounded-md"
+              type="file"
+              accept="image/*"
+              onChange={(files) => handleSelectedFile(files.target.files)}
+            />
+          )}
 
-            {imageFile && (
-              <>
-                <div className="flex justify-between">
-                  {downloadURL && (
+          {imageFile && (
+            <>
+              <div className="flex justify-between">
+                {downloadURL && (
+                  <div className="w-24 h-24 rounded-lg overflow-hidden">
+                    <Image
+                      className="object-cover border border-solid rounded-lg"
+                      src={downloadURL}
+                      alt={downloadURL}
+                      width={100}
+                      height={100}
+                    />
+                  </div>
+                )}
+                <FlexCol>
+                  <button
+                    onClick={handleRemoveFile}
+                    className="rounded-md px-5 py-2.5 text-white text-center text-xs bg-neutral-500"
+                  >
+                    Remove
+                  </button>
+
+                  <button
+                    onClick={handleUploadFile}
+                    className="rounded-md px-5 py-2.5 text-white text-center text-xs bg-blue-500"
+                  >
+                    Upload
+                  </button>
+
+                  <Progress percent={progressUpload} />
+                </FlexCol>
+              </div>
+
+              {/* <div>
+                    <span className="text-xs">{imageFile.name}</span>
+                    <span className="text-xs">Size: {imageFile.size}</span>
+                  </div> */}
+            </>
+          )}
+
+          <button
+            onClick={addExpense}
+            className="rounded-md px-5 py-2.5 text-white text-center text-xs bg-red-500"
+          >
+            Request
+          </button>
+        </FlexCol>
+      </Card>
+      <Card>
+        <SubHeading>Total Expenses</SubHeading>
+        {renderTotal()}
+      </Card>
+      <Card>
+        <SubHeading>Expenses</SubHeading>
+        <ul className="text-xs flex flex-col gap-1 text-slate-700 mt-2">
+          {!expenses
+            ? "loading"
+            : expenses.map((expense, index) => {
+                return (
+                  <li
+                    className="flex gap-2 bg-slate-100 p-2 rounded-md"
+                    key={index}
+                  >
                     <div className="w-24 h-24 rounded-lg overflow-hidden">
                       <Image
-                        className="object-cover border border-solid rounded-lg"
-                        src={downloadURL}
-                        alt={downloadURL}
+                        className="object-cover"
+                        src={
+                          expense.image
+                            ? expense.image
+                            : "https://placehold.co/96x96"
+                        }
                         width={100}
                         height={100}
                       />
                     </div>
-                  )}
-                  <FlexCol>
-                    <button
-                      onClick={handleRemoveFile}
-                      className="rounded-md px-5 py-2.5 text-white text-center text-xs bg-neutral-500"
-                    >
-                      Remove
-                    </button>
-
-                    <button
-                      onClick={handleUploadFile}
-                      className="rounded-md px-5 py-2.5 text-white text-center text-xs bg-blue-500"
-                    >
-                      Upload
-                    </button>
-
-                    <Progress percent={progressUpload} />
-                  </FlexCol>
-                </div>
-
-                {/* <div>
-                    <span className="text-xs">{imageFile.name}</span>
-                    <span className="text-xs">Size: {imageFile.size}</span>
-                  </div> */}
-              </>
-            )}
-
-            <button
-              onClick={addExpense}
-              className="rounded-md px-5 py-2.5 text-white text-center text-xs bg-red-500"
-            >
-              Request
-            </button>
-          </FlexCol>
-        </Card>
-        <Card>
-          <SubHeading>Total Expenses</SubHeading>
-          {renderTotal()}
-        </Card>
-        <Card>
-          <SubHeading>Expenses</SubHeading>
-          <ul className="text-xs flex flex-col gap-1 text-slate-700 mt-2">
-            {!expenses
-              ? "loading"
-              : expenses.map((expense, index) => {
-                  return (
-                    <li
-                      className="flex gap-2 bg-slate-100 p-2 rounded-md"
-                      key={index}
-                    >
-                      <div className="w-24 h-24 rounded-lg overflow-hidden">
-                        <Image
-                          className="object-cover"
-                          src={
-                            expense.image
-                              ? expense.image
-                              : "https://placehold.co/96x96"
-                          }
-                          width={100}
-                          height={100}
-                        />
-                      </div>
-                      <div className="flex flex-col gap-2">
-                        <span className="text-sm font-bold">
-                          {expense.name}
+                    <div className="flex flex-col gap-2">
+                      <span className="text-sm font-bold">{expense.name}</span>
+                      <span>{expense.description}</span>
+                      <span>₱{expense.cost.toLocaleString("en-US")}</span>
+                      <span>Ref. # {expense.reference}</span>
+                      <div className="flex flex-col">
+                        <span>Date submitted:</span>
+                        <span>
+                          {new Date(
+                            expense?.createdAt?.seconds * 1000
+                          ).toLocaleDateString("en-US")}
                         </span>
-                        <span>{expense.description}</span>
-                        <span>₱{expense.cost.toLocaleString("en-US")}</span>
-                        <span>Ref. # {expense.reference}</span>
-                        <div className="flex flex-col">
-                          <span>Date submitted:</span>
-                          <span>
-                            {new Date(
-                              expense?.createdAt?.seconds * 1000
-                            ).toLocaleDateString("en-US")}
-                          </span>
-                        </div>
                       </div>
-                    </li>
-                  );
-                })}
-          </ul>
-        </Card>
-      </FlexCol>
-    </Padded>
+                    </div>
+                  </li>
+                );
+              })}
+        </ul>
+      </Card>
+    </FlexCol>
   );
 }

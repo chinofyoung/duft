@@ -7,7 +7,7 @@ import Padded from "./layout/padded";
 import FlexCol from "./layout/flex-col";
 import Card from "./layout/card";
 import MainHeading from "./layout/main-heading";
-import { AiFillHome, AiOutlineDatabase } from "react-icons/ai";
+import { AiFillSetting, AiOutlineDatabase } from "react-icons/ai";
 import { BsClipboard2Data, BsFillCartFill } from "react-icons/bs";
 import SubHeading from "./layout/sub-heading";
 
@@ -22,12 +22,6 @@ export default function Home() {
   }, [user]);
 
   const menu = [
-    {
-      url: "/",
-      label: "Home",
-      icon: <AiFillHome />,
-      disabled: false,
-    },
     {
       url: "/record",
       label: "Record",
@@ -47,9 +41,9 @@ export default function Home() {
       disabled: true,
     },
     {
-      url: "/reports",
-      label: "Reports",
-      icon: <BsClipboard2Data />,
+      url: "/settings",
+      label: "Settings",
+      icon: <AiFillSetting />,
       disabled: true,
     },
   ];
