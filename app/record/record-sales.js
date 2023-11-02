@@ -18,7 +18,7 @@ import { UserAuth } from "../context/auth-context";
 import Confirmation from "../components/confirmation";
 import Sales from "./sales";
 
-export default function RecordProduct() {
+export default function RecordSales() {
   let [isOpen, setIsOpen] = useState(false);
   const { user } = UserAuth();
   const [items, setItems] = useState([]);

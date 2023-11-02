@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { Tab } from "@headlessui/react";
-import RecordProduct from "./record-product";
+import RecordSales from "./record-sales";
 import RecordExpense from "./record-expense";
 import Padded from "../layout/padded";
 import MainHeading from "../layout/main-heading";
@@ -37,7 +37,7 @@ export default function Page() {
         </Tab.List>
         <Tab.Panels>
           <Tab.Panel>
-            <RecordProduct />
+            <RecordSales />
           </Tab.Panel>
           <Tab.Panel>
             <RecordExpense />

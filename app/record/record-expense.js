@@ -20,6 +20,7 @@ import FlexCol from "../layout/flex-col";
 import Card from "../layout/card";
 import Confirmation from "../components/confirmation";
 import Expense from "./expense";
+import { Tab } from "@headlessui/react";
 
 export default function RecordExpense() {
   let [isOpen, setIsOpen] = useState(false);
@@ -153,6 +154,9 @@ export default function RecordExpense() {
     );
   }
 
+  const pending = expenses.filter((expense) => expense.approved === false);
+  const approved = expenses.filter((expense) => expense.approved === true);
+
   return (
     <FlexCol>
       <Confirmation
@@ -266,13 +270,57 @@ export default function RecordExpense() {
       </Card>
       <Card>
         <SubHeading>Expenses</SubHeading>
-        <ul className="text-xs flex flex-col gap-1 text-slate-700 mt-2">
-          {!expenses
-            ? "loading"
-            : expenses.map((expense, index) => {
-                return <Expense expense={expense} key={`expense-${index}`} />;
-              })}
-        </ul>
+
+        <Tab.Group>
+          <Tab.List className="grid grid-cols-2 my-4">
+            <Tab as="div">
+              {({ selected }) => (
+                <button
+                  className={`${
+                    selected ? "bg-slate-600 text-white" : "bg-slate-200"
+                  }  w-full py-2 rounded-l-lg`}
+                >
+                  Pending
+                </button>
+              )}
+            </Tab>
+            <Tab as="div">
+              {({ selected }) => (
+                <button
+                  className={`${
+                    selected ? "bg-slate-600 text-white" : "bg-slate-200"
+                  }  w-full py-2 rounded-r-lg`}
+                >
+                  Approved
+                </button>
+              )}
+            </Tab>
+          </Tab.List>
+          <Tab.Panels>
+            <Tab.Panel>
+              <ul className="text-xs flex flex-col gap-1 text-slate-700 mt-2">
+                {!pending
+                  ? "loading"
+                  : pending.map((expense, index) => {
+                      return (
+                        <Expense expense={expense} key={`expense-${index}`} />
+                      );
+                    })}
+              </ul>
+            </Tab.Panel>
+            <Tab.Panel>
+              <ul className="text-xs flex flex-col gap-1 text-slate-700 mt-2">
+                {!approved
+                  ? "loading"
+                  : approved.map((expense, index) => {
+                      return (
+                        <Expense expense={expense} key={`expense-${index}`} />
+                      );
+                    })}
+              </ul>
+            </Tab.Panel>
+          </Tab.Panels>
+        </Tab.Group>
       </Card>
     </FlexCol>
   );
