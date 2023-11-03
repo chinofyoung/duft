@@ -1,4 +1,4 @@
-import { doc, onSnapshot } from "firebase/firestore";
+import { doc, onSnapshot, updateDoc } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { db } from "../firebase";
 import { Disclosure } from "@headlessui/react";
@@ -26,6 +26,20 @@ export default function Sales({ expense }) {
       setexpenseUser(snapshot.data() || {});
     });
   }, [expenseUser.uid]);
+
+  // approve expense
+  const approveExpense = async (id) => {
+    await updateDoc(doc(db, "expenses", id), {
+      approved: true,
+    });
+  };
+
+  // reject expense
+  const rejectExpense = async (id) => {
+    await updateDoc(doc(db, "expenses", id), {
+      approved: false,
+    });
+  };
 
   return (
     <li className="flex flex-col gap-2 bg-slate-100 p-2 pr-4 rounded-md">
@@ -79,10 +93,23 @@ export default function Sales({ expense }) {
               <div className="flex flex-col">
                 <strong>Status:</strong>
                 <span>Pending</span>
-                {user.uid === "UXQ7tG2XoqTmrbks3eUOlkBhNo92" && !expense.approved && (
+                {user.uid === "UXQ7tG2XoqTmrbks3eUOlkBhNo92" && (
                   <div className="flex gap-2 mt-2">
-                    <button className="bg-green-500 py-1 px-2 rounded-md text-white">Approve</button>
-                    <button className="bg-red-500 py-1 px-2 rounded-md text-white">Reject</button>
+                    {expense.approved ? (
+                      <button
+                        onClick={() => rejectExpense(expense.id)}
+                        className="bg-red-500 py-1 px-2 rounded-md text-white"
+                      >
+                        Reject
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => approveExpense(expense.id)}
+                        className="bg-green-500 py-1 px-2 rounded-md text-white"
+                      >
+                        Approve
+                      </button>
+                    )}
                   </div>
                 )}
               </div>
