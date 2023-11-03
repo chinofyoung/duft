@@ -93,7 +93,7 @@ export default function Sales({ expense }) {
               <div className="flex flex-col">
                 <strong>Status:</strong>
                 <span>{expense.approved ? "approved" : "pending"}</span>
-                {user.uid === "tbuBqUOXP2TlqJmUM0VeYKwBEhY2" && (
+                {user.uid === "tbuBqUOXP2TlqJmUM0VeYKwBEhY2" || user.id === "aIrwQQEvjoN9aOuFsdyEd5hue5u2" && (
                   <div className="flex gap-2 mt-2">
                     {expense.approved ? (
                       <button
