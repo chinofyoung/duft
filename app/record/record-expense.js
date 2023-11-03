@@ -226,7 +226,7 @@ export default function RecordExpense() {
                     <Image
                       className="object-cover border border-solid rounded-lg"
                       src={downloadURL}
-                      alt={downloadURL}
+                      alt="Uploaded Image"
                       width={100}
                       height={100}
                     />

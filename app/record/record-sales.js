@@ -106,12 +106,13 @@ export default function RecordSales() {
         <div className="mt-2"></div>
         <FlexCol>
           <select
-            className="border rounded-md py-2.5 px-4 text-neutral-700"
+            className="border rounded-md py-2.5 px-2 text-neutral-700"
+            defaultValue={"Choose a product"}
             onChange={(e) =>
               setNewSale({ ...newSale, product: e.target.value })
             }
           >
-            <option className="bg-red-500" disabled selected hidden>
+            <option disabled hidden>
               Choose a product
             </option>
             {!items

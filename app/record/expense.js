@@ -8,14 +8,24 @@ import {
   AiFillMinusCircle,
 } from "react-icons/ai";
 import Image from "next/image";
+import { UserAuth } from "../context/auth-context";
 
 export default function Sales({ expense }) {
-  const [user, setUser] = useState({});
+  const [expenseUser, setexpenseUser] = useState({});
+  const { user } = UserAuth();
+
+  useEffect(() => {
+    const checkAuthentication = async () => {
+      await new Promise((resolve) => setTimeout(resolve, 50));
+    };
+    checkAuthentication();
+  }, [user]);
+
   useEffect(() => {
     onSnapshot(doc(db, "users", expense.uid), (snapshot) => {
-      setUser(snapshot.data() || {});
+      setexpenseUser(snapshot.data() || {});
     });
-  }, [user.uid]);
+  }, [expenseUser.uid]);
 
   return (
     <li className="flex flex-col gap-2 bg-slate-100 p-2 pr-4 rounded-md">
@@ -25,12 +35,12 @@ export default function Sales({ expense }) {
             <div className="w-12 h-12 rounded-lg overflow-hidden">
               <Image
                 className="object-cover"
-                alt="Default photo"
+                alt="Expense Photo"
                 src={
                   expense.image ? expense.image : "https://placehold.co/96x96"
                 }
-                width={48}
-                height={48}
+                width={100}
+                height={100}
               />
             </div>
             <span className="text-sm font-bold">{expense.name}</span>
@@ -59,13 +69,22 @@ export default function Sales({ expense }) {
               </span>
             </div>
             <div className="flex items-center gap-2">
-              <img className="w-6 h-6 rounded-full" src={user.photoURL} />
-              <span className="font-bold">{user.displayName}</span>
+              <img
+                className="w-6 h-6 rounded-full"
+                src={expenseUser.photoURL}
+              />
+              <span className="font-bold">{expenseUser.displayName}</span>
             </div>
             <div className="flex justify-between items-center col-span-2 border-t border-solid pt-2">
               <div className="flex flex-col">
                 <strong>Status:</strong>
                 <span>Pending</span>
+                {user.uid === "UXQ7tG2XoqTmrbks3eUOlkBhNo92" && !expense.approved && (
+                  <div className="flex gap-2 mt-2">
+                    <button className="bg-green-500 py-1 px-2 rounded-md text-white">Approve</button>
+                    <button className="bg-red-500 py-1 px-2 rounded-md text-white">Reject</button>
+                  </div>
+                )}
               </div>
 
               <div className="flex gap-2">

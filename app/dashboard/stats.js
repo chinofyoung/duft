@@ -1,4 +1,9 @@
+import react, { useContext } from "react";
+import { SalesContext } from "../context/sales-context";
+
 export default function Stats() {
+  const { sales } = useContext(SalesContext);
+
   return (
     <div className="gap-4 flex bg-slate-300 p-4 flex-col">
       <div className="flex gap-2 text-xs mt-2">
@@ -57,11 +62,21 @@ export default function Stats() {
         </div>
         <div className="bg-teal-500 rounded-md p-4 shadow-sm">
           <h3 className="text-lg text-white">Receivables</h3>
-          <div className="flex flex-col text-white">
+          <div
+            className="fl
+          ex flex-col text-white"
+          >
             <span className="text-xs">
               Total: <strong>16,430</strong>
             </span>
           </div>
+        </div>
+
+        <div>
+          {console.log(sales)}
+          {/* {sales.map((sale, index) => {
+            return <div>{sale.product} test</div>;
+          })} */}
         </div>
       </div>
     </div>
