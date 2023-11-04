@@ -2,11 +2,10 @@
 import React, { useState, useEffect } from "react";
 import {
   collection,
-  addDoc,
-  serverTimestamp,
   query,
   onSnapshot,
   orderBy,
+  where,
 } from "firebase/firestore";
 import { db } from "../firebase";
 import Padded from "../layout/padded";
@@ -16,44 +15,14 @@ import FlexCol from "../layout/flex-col";
 import Card from "../layout/card";
 
 export default function Page() {
-  const [items, setItems] = useState([]);
   const [sales, setSales] = useState([]);
-  const [newSale, setNewSale] = useState({
-    product: "",
-    quantity: "",
-  });
-
-  // add sale to database
-  const addSale = async (e) => {
-    e.preventDefault();
-    if (newSale.quantity !== "") {
-      await addDoc(collection(db, "sales"), {
-        product: newSale.product,
-        quantity: newSale.quantity,
-        createdAt: serverTimestamp(),
-      });
-    }
-  };
-
-  // read items from database
-  useEffect(() => {
-    const q = query(collection(db, "items"));
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      let itemsArr = [];
-
-      querySnapshot.forEach((doc) => {
-        itemsArr.push({ ...doc.data(), id: doc.id });
-      });
-      setItems(itemsArr);
-    });
-  }, []);
 
   // read sales from database
   useEffect(() => {
     const q = query(
       collection(db, "sales"),
-      orderBy("createdAt", "desc")
-      // limit(5)
+      // where("quantity", "<", 5),
+      orderBy("createdAt", "desc"),
     );
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       let salesArr = [];
@@ -65,6 +34,7 @@ export default function Page() {
     });
   }, []);
 
+  // render total sales
   function renderTotal() {
     const salesLength = parseInt(sales.length);
     var totalSales = 0;

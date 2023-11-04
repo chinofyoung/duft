@@ -44,6 +44,14 @@ const Navigation = () => {
       label: "Add Record",
     },
     {
+      url: "/inventory",
+      label: "Inventory",
+    },
+    {
+      url: "/products",
+      label: "Products",
+    },
+    {
       url: "/reports",
       label: "Reports",
     },

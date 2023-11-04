@@ -5,6 +5,7 @@ import Padded from "./layout/padded";
 import FlexCol from "./layout/flex-col";
 import Card from "./layout/card";
 import Stats from "./dashboard/stats";
+import PermanentStats from "./dashboard/permanent-stats";
 import LargeLinks from "./dashboard/large-links";
 import SmallLinks from "./dashboard/small-links";
 import Login from "./components/login";
@@ -44,6 +45,7 @@ export default function Home() {
                   />
                 </div>
               </Card>
+              <PermanentStats />
               <LargeLinks />
               <SmallLinks />
             </FlexCol>

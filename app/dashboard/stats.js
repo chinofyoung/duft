@@ -9,12 +9,6 @@ export default function Stats() {
       <div className="flex gap-2 text-xs mt-2">
         <a
           href=""
-          className="text-white bg-slate-400 px-4 py-1 flex items-center rounded-md"
-        >
-          Day
-        </a>
-        <a
-          href=""
           className="text-white bg-slate-600 px-4 py-1 flex items-center rounded-md font-bold"
         >
           Month
@@ -73,7 +67,7 @@ export default function Stats() {
         </div>
 
         <div>
-          {console.log(sales)}
+          {/* {console.log(sales)} */}
           {/* {sales.map((sale, index) => {
             return <div>{sale.product} test</div>;
           })} */}

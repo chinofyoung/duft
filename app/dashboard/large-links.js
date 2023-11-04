@@ -15,7 +15,7 @@ export default function LargeLinks() {
         <p className="text-xs">Record sales and expenses</p>
       </Link>
       <Link
-        href="/record"
+        href="/products"
         className="bg-orange-500 w-full rounded-lg text-white p-4 flex flex-col gap-2"
       >
         <BsFillCartFill className="text-2xl" />

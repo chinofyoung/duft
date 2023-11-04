@@ -69,14 +69,26 @@ export default function Products() {
                       <AiOutlineRight className="ml-auto ui-open:rotate-90 ui-open:transform" />
                     </Disclosure.Button>
                     <Disclosure.Panel className="w-full rounded-md flex flex-col justify-end">
-                      <div className="flex self-end gap-2">
-                        <Button label="Edit" secondary={false} />
-                        <button
-                          onClick={() => deleteItem(item.id)}
-                          className="rounded-md px-5 py-2.5 text-white text-center text-xs bg-slate-500"
-                        >
-                          Delete
-                        </button>
+                      <div className="flex flex-col gap-2">
+                        <div className="flex justify-between text-xs text-slate-800 p-4 bg-slate-200 rounded-md">
+                          <span>
+                            Price: <strong>₱{item.price}</strong>
+                          </span>
+                          <span>
+                            Cost: <strong>₱{item.cost}</strong>
+                          </span>
+                          <span>
+                            Stock: <strong>{item.quantity}</strong>
+                          </span>
+                        </div>
+                        <div className="flex self-end gap-2">
+                          <Button label="Edit" secondary small />
+                          <Button
+                            label="Delete"
+                            small
+                            onClick={() => deleteItem(item.id)}
+                          />
+                        </div>
                       </div>
                     </Disclosure.Panel>
                   </Disclosure>

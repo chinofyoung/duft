@@ -15,6 +15,7 @@ export default function AddProduct() {
   const [newItem, setNewItem] = useState({
     name: "",
     price: "",
+    cost: "",
     quantity: "",
     image: "",
   });
@@ -27,11 +28,12 @@ export default function AddProduct() {
       await addDoc(collection(db, "items"), {
         name: newItem.name.trim(),
         price: newItem.price,
+        cost: newItem.cost,
         quantity: newItem.quantity,
         image: newItem.image,
         createdAt: serverTimestamp(),
       });
-      setNewItem({ name: "", price: "", quantity: "", image: "" });
+      setNewItem({ name: "", price: "", cost: "", quantity: "", image: "" });
     }
   };
 
@@ -68,6 +70,15 @@ export default function AddProduct() {
                   className="text-sm border w-full px-5 py-2.5 rounded-md"
                   type="number"
                   placeholder="Price"
+                />
+                <input
+                  value={newItem.cost}
+                  onChange={(e) =>
+                    setNewItem({ ...newItem, cost: e.target.value })
+                  }
+                  className="text-sm border w-full px-5 py-2.5 rounded-md"
+                  type="number"
+                  placeholder="Cost per product"
                 />
                 <input
                   value={newItem.quantity}
