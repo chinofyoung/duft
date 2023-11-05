@@ -1,5 +1,6 @@
 import { doc, onSnapshot, updateDoc } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
+import { Image } from "antd";
 import { db } from "../firebase";
 import { Disclosure } from "@headlessui/react";
 import {
@@ -7,7 +8,7 @@ import {
   AiFillCheckCircle,
   AiFillMinusCircle,
 } from "react-icons/ai";
-import Image from "next/image";
+// import Image from "next/image";
 import { UserAuth } from "../context/auth-context";
 
 export default function Sales({ expense }) {
@@ -62,34 +63,34 @@ export default function Sales({ expense }) {
     <li className="flex flex-col gap-2 bg-slate-100 p-2 pr-4 rounded-md">
       <Disclosure>
         <Disclosure.Button>
-          <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-lg overflow-hidden">
-              <Image
-                className="object-cover"
-                alt="Expense Photo"
-                src={
-                  expense.image ? expense.image : "https://placehold.co/96x96"
-                }
-                width={100}
-                height={100}
-              />
-            </div>
+          <div className="flex items-center py-2 pl-2 gap-4">
             <span className="text-sm font-bold">{expense.name}</span>
             <AiOutlineRight className="ml-auto text-base ui-open:rotate-90 ui-open:transform" />
           </div>
         </Disclosure.Button>
         <Disclosure.Panel>
           <div className="grid grid-cols-2 gap-2 p-2 border-t border-solid">
-            <div className="flex flex-col">
-              <strong>Description:</strong>
-              {expense.description}
+            <div className="w-[120px] h-[120px] rounded-lg overflow-hidden border-2 border-slate-300">
+              <Image
+                src={
+                  expense.image ? expense.image : "https://placehold.co/120x120"
+                }
+                alt="Expense Photo"
+                style={{ objectFit: "cover" }}
+              />
             </div>
-            <div className="flex flex-col">
-              <strong>Cost:</strong>₱{expense.cost.toLocaleString("en-US")}
-            </div>
-            <div className="flex flex-col">
-              <strong>Reference #</strong>
-              <span>{expense.reference}</span>
+            <div className="flex flex-col gap-4">
+              <div className="flex flex-col">
+                <strong>Description:</strong>
+                {expense.description}
+              </div>
+              <div className="flex flex-col">
+                <strong>Cost:</strong>₱{expense.cost.toLocaleString("en-US")}
+              </div>
+              <div className="flex flex-col">
+                <strong>Reference #</strong>
+                <span>{expense.reference}</span>
+              </div>
             </div>
             <div className="flex flex-col">
               <strong>Date submitted:</strong>

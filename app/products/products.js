@@ -5,6 +5,7 @@ import {
   query,
   onSnapshot,
   deleteDoc,
+  orderBy,
   doc,
 } from "firebase/firestore";
 import { db } from "../firebase";
@@ -21,7 +22,7 @@ export default function Products() {
 
   // read items from database
   useEffect(() => {
-    const q = query(collection(db, "items"));
+    const q = query(collection(db, "items"), orderBy("name", "desc"));
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       let itemsArr = [];
 
