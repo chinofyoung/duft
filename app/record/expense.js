@@ -106,7 +106,7 @@ export default function Sales({ expense }) {
             <div className="flex justify-between items-center col-span-2 border-t border-solid pt-2">
               <div className="flex flex-col">
                 {/* tingtong approval */}
-                {user.uid === "tbuBqUOXP2TlqJmUM0VeYKwBEhY2" && (
+                {user.uid === "aIrwQQEvjoN9aOuFsdyEd5hue5u2" && (
                   <div className="flex gap-2 mt-2">
                     {expense.approvedT ? (
                       <button
@@ -126,7 +126,7 @@ export default function Sales({ expense }) {
                   </div>
                 )}
                 {/* peben approval */}
-                {user.uid === "aIrwQQEvjoN9aOuFsdyEd5hue5u2" && (
+                {user.uid === "tbuBqUOXP2TlqJmUM0VeYKwBEhY2" && (
                   <div className="flex gap-2 mt-2">
                     {expense.approvedP ? (
                       <button
