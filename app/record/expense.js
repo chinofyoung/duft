@@ -13,6 +13,9 @@ import { UserAuth } from "../context/auth-context";
 export default function Sales({ expense }) {
   const [expenseUser, setexpenseUser] = useState({});
   const { user } = UserAuth();
+  const pebenId = "tbuBqUOXP2TlqJmUM0VeYKwBEhY2";
+  const chinoId = "UXQ7tG2XoqTmrbks3eUOlkBhNo92";
+  const martinId = "aIrwQQEvjoN9aOuFsdyEd5hue5u2";
 
   useEffect(() => {
     const checkAuthentication = async () => {
@@ -30,28 +33,28 @@ export default function Sales({ expense }) {
   // approve expense tingtong
   const approveExpenseT = async (id) => {
     await updateDoc(doc(db, "expenses", id), {
-      approved: true,
+      approvedT: true,
     });
   };
 
   // approve expense peben
   const approveExpenseP = async (id) => {
     await updateDoc(doc(db, "expenses", id), {
-      approved: true,
+      approvedP: true,
     });
   };
 
   // reject expenseT
   const rejectExpenseT = async (id) => {
     await updateDoc(doc(db, "expenses", id), {
-      approved: false,
+      approvedT: false,
     });
   };
 
   // reject expenseP
   const rejectExpenseP = async (id) => {
     await updateDoc(doc(db, "expenses", id), {
-      approved: false,
+      approvedP: false,
     });
   };
 
@@ -106,7 +109,7 @@ export default function Sales({ expense }) {
             <div className="flex justify-between items-center col-span-2 border-t border-solid pt-2">
               <div className="flex flex-col">
                 {/* tingtong approval */}
-                {user.uid === "aIrwQQEvjoN9aOuFsdyEd5hue5u2" && (
+                {user.uid === martinId && (
                   <div className="flex gap-2 mt-2">
                     {expense.approvedT ? (
                       <button
@@ -126,7 +129,7 @@ export default function Sales({ expense }) {
                   </div>
                 )}
                 {/* peben approval */}
-                {user.uid === "tbuBqUOXP2TlqJmUM0VeYKwBEhY2" && (
+                {user.uid === pebenId && (
                   <div className="flex gap-2 mt-2">
                     {expense.approvedP ? (
                       <button
