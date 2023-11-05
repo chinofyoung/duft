@@ -47,7 +47,7 @@ export default function Inventory() {
         <strong className="text-lg">{renderTotalStocks()}</strong>
       </span>
       <span className="flex flex-col">
-        Total cost:
+        Total Inventory Cost:
         <strong className="text-lg">₱{renderTotalCost()}</strong>
       </span>
     </div>

@@ -105,9 +105,6 @@ export default function Sales({ expense }) {
             </div>
             <div className="flex justify-between items-center col-span-2 border-t border-solid pt-2">
               <div className="flex flex-col">
-                <strong>Status:</strong>
-                <span>{expense.approved ? "approved" : "pending"}</span>
-
                 {/* tingtong approval */}
                 {user.uid === "tbuBqUOXP2TlqJmUM0VeYKwBEhY2" && (
                   <div className="flex gap-2 mt-2">

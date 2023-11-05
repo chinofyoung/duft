@@ -22,6 +22,7 @@ import Confirmation from "../components/confirmation";
 import Expense from "./expense";
 import Button from "../layout/button";
 import { Tab } from "@headlessui/react";
+import { AiOutlineCloudUpload } from "react-icons/ai";
 
 export default function RecordExpense() {
   let [isOpen, setIsOpen] = useState(false);
@@ -160,8 +161,12 @@ export default function RecordExpense() {
     );
   }
 
-  const pending = expenses.filter((expense) => expense.approvedT === false || expense.approvedP === false);
-  const approved = expenses.filter((expense) => expense.approvedT === true && expense.approvedP === true);
+  const pending = expenses.filter(
+    (expense) => expense.approvedT === false || expense.approvedP === false
+  );
+  const approved = expenses.filter(
+    (expense) => expense.approvedT === true && expense.approvedP === true
+  );
 
   return (
     <FlexCol>
@@ -216,17 +221,28 @@ export default function RecordExpense() {
           {imageFile ? (
             ""
           ) : (
-            <input
-              className="border-none bg-slate-200 rounded-md"
-              type="file"
-              accept="image/*"
-              onChange={(files) => handleSelectedFile(files.target.files)}
-            />
+            <div className="w-full bg-slate-50 border border-slate-200 flex justify-center items-center rounded-lg h-24">
+              <input
+                className="border-none bg-slate-200 rounded-md"
+                id="upload-file"
+                type="file"
+                accept="image/*"
+                onChange={(files) => handleSelectedFile(files.target.files)}
+                hidden
+              />
+              <label
+                htmlFor="upload-file"
+                className="w-12 h-12 text-neutral-500 flex flex-col justify-center items-center"
+              >
+                <AiOutlineCloudUpload className="text-3xl" />{" "}
+                <span className="text-xs font-bold">Upload</span>
+              </label>
+            </div>
           )}
 
           {imageFile && (
             <>
-              <div className="flex justify-between">
+              <div className="flex flex-col items-center w-full">
                 {downloadURL && (
                   <div className="w-24 h-24 rounded-lg overflow-hidden">
                     <Image
@@ -238,23 +254,24 @@ export default function RecordExpense() {
                     />
                   </div>
                 )}
-                <FlexCol>
-                  <button
-                    onClick={handleRemoveFile}
-                    className="rounded-md px-5 py-2.5 text-white text-center text-xs bg-neutral-500"
-                  >
-                    Remove
-                  </button>
+                <div className="flex flex-col gap-4 w-full items-center">
+                  <Progress percent={progressUpload} status="active" />
+                  <div className="flex gap-4">
+                    <button
+                      onClick={handleRemoveFile}
+                      className="rounded-md px-5 py-2.5 text-white text-center text-xs bg-neutral-500"
+                    >
+                      Remove
+                    </button>
 
-                  <button
-                    onClick={handleUploadFile}
-                    className="rounded-md px-5 py-2.5 text-white text-center text-xs bg-blue-500"
-                  >
-                    Upload
-                  </button>
-
-                  <Progress percent={progressUpload} />
-                </FlexCol>
+                    <button
+                      onClick={handleUploadFile}
+                      className="rounded-md px-5 py-2.5 text-white text-center text-xs bg-blue-500"
+                    >
+                      Upload
+                    </button>
+                  </div>
+                </div>
               </div>
 
               {/* <div>
@@ -300,26 +317,38 @@ export default function RecordExpense() {
           </Tab.List>
           <Tab.Panels>
             <Tab.Panel>
-              <ul className="text-xs flex flex-col gap-1 text-slate-700 mt-2">
-                {!pending
-                  ? "loading"
-                  : pending.map((expense, index) => {
-                      return (
-                        <Expense expense={expense} key={`expense-${index}`} />
-                      );
-                    })}
-              </ul>
+              {pending.length < 1 ? (
+                <span className="text-sm text-neutral-700">
+                  No records yet.
+                </span>
+              ) : (
+                <ul className="text-xs flex flex-col gap-1 text-slate-700 mt-2">
+                  {!pending
+                    ? "loading"
+                    : pending.map((expense, index) => {
+                        return (
+                          <Expense expense={expense} key={`expense-${index}`} />
+                        );
+                      })}
+                </ul>
+              )}
             </Tab.Panel>
             <Tab.Panel>
-              <ul className="text-xs flex flex-col gap-1 text-slate-700 mt-2">
-                {!approved
-                  ? "loading"
-                  : approved.map((expense, index) => {
-                      return (
-                        <Expense expense={expense} key={`expense-${index}`} />
-                      );
-                    })}
-              </ul>
+              {approved.length < 1 ? (
+                <span className="text-sm text-neutral-700">
+                  No records yet.
+                </span>
+              ) : (
+                <ul className="text-xs flex flex-col gap-1 text-slate-700 mt-2">
+                  {!approved
+                    ? "loading"
+                    : approved.map((expense, index) => {
+                        return (
+                          <Expense expense={expense} key={`expense-${index}`} />
+                        );
+                      })}
+                </ul>
+              )}
             </Tab.Panel>
           </Tab.Panels>
         </Tab.Group>
