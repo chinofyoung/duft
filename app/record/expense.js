@@ -108,7 +108,7 @@ export default function Sales({ expense }) {
                 {/* tingtong approval */}
                 {user.uid === "tbuBqUOXP2TlqJmUM0VeYKwBEhY2" && (
                   <div className="flex gap-2 mt-2">
-                    {expense.approved ? (
+                    {expense.approvedT ? (
                       <button
                         onClick={() => rejectExpenseT(expense.id)}
                         className="bg-red-500 py-1 px-2 rounded-md text-white"
@@ -128,7 +128,7 @@ export default function Sales({ expense }) {
                 {/* peben approval */}
                 {user.uid === "aIrwQQEvjoN9aOuFsdyEd5hue5u2" && (
                   <div className="flex gap-2 mt-2">
-                    {expense.approved ? (
+                    {expense.approvedT ? (
                       <button
                         onClick={() => rejectExpenseP(expense.id)}
                         className="bg-red-500 py-1 px-2 rounded-md text-white"
