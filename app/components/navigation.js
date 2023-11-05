@@ -4,6 +4,7 @@ import Link from "next/link";
 import { UserAuth } from "../context/auth-context";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { AiFillCloseCircle } from "react-icons/ai";
+import Button from "../layout/button";
 
 const Navigation = () => {
   const { user, googleSignIn, logOut } = UserAuth();
@@ -105,19 +106,9 @@ const Navigation = () => {
 
         <div className="mt-auto w-full flex justify-center p-4 bg-slate-100">
           {loading ? null : !user ? (
-            <button
-              onClick={handleSignIn}
-              className="bg-red-500 w-full text-sm px-4 py-2.5 text-white rounded-md"
-            >
-              Login
-            </button>
+            <Button onClick={handleSignIn} label="Login" styles="w-full" />
           ) : (
-            <button
-              onClick={handleSignOut}
-              className="bg-red-500 w-full text-sm px-4 py-2.5 text-white rounded-md"
-            >
-              Logout
-            </button>
+            <Button onClick={handleSignOut} label="Logout" styles="w-full" />
           )}
         </div>
       </div>

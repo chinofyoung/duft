@@ -3,34 +3,34 @@ import { createContext, useState, useEffect } from "react";
 import { collection, query, onSnapshot, orderBy } from "firebase/firestore";
 import { db } from "../firebase";
 
-export const SalesContext = createContext({
-  sales: {},
+export const ItemsContext = createContext({
+  items: {},
 });
 
-export const SalesContextProvider = ({ children }) => {
-  const [sales, setSales] = useState([]);
+export const ItemsContextProvider = ({ children }) => {
+  const [items, setItems] = useState([]);
 
-  // read sales from database
+  // read items from database
   useEffect(() => {
-    const q = query(collection(db, "sales"), orderBy("createdAt", "desc"));
+    const q = query(collection(db, "items"), orderBy("createdAt", "desc"));
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      let salesArr = [];
+      let itemsArr = [];
 
       querySnapshot.forEach((doc) => {
-        salesArr.push({ ...doc.data(), id: doc.id });
+        itemsArr.push({ ...doc.data(), id: doc.id });
       });
-      setSales(salesArr);
+      setItems(itemsArr);
       return () => unsubscribe();
     });
   }, []);
 
   return (
-    <SalesContext.Provider
+    <ItemsContext.Provider
       value={{
-        sales,
+        items,
       }}
     >
       {children}
-    </SalesContext.Provider>
+    </ItemsContext.Provider>
   );
 };

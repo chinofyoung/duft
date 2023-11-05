@@ -17,28 +17,27 @@ import Card from "../layout/card";
 import { UserAuth } from "../context/auth-context";
 import Confirmation from "../components/confirmation";
 import Sales from "./sales";
+import Button from "../layout/button";
 
 export default function RecordSales() {
   let [isOpen, setIsOpen] = useState(false);
   const { user } = UserAuth();
   const [items, setItems] = useState([]);
   const [sales, setSales] = useState([]);
+  const [checked, setChecked] = useState([]);
   const [newSale, setNewSale] = useState({
     product: "",
     quantity: "",
+    totalPrice: "",
+    cash: false,
   });
 
-  // add sale to database
-  const addSale = async (e) => {
-    e.preventDefault();
-    if (user && newSale.product !== "" && newSale.quantity !== "") {
-      setIsOpen(true);
-      await addDoc(collection(db, "sales"), {
-        product: newSale.product,
-        quantity: newSale.quantity,
-        createdAt: serverTimestamp(),
-        uid: user.uid,
-      });
+  // checkbox
+  const handleChange = (e) => {
+    if (e.target.checked) {
+      setChecked(true);
+    } else {
+      setChecked(false);
     }
   };
 
@@ -52,6 +51,7 @@ export default function RecordSales() {
         itemsArr.push({ ...doc.data(), id: doc.id });
       });
       setItems(itemsArr);
+      return () => unsubscribe();
     });
   }, []);
 
@@ -65,8 +65,26 @@ export default function RecordSales() {
         salesArr.push({ ...doc.data(), id: doc.id });
       });
       setSales(salesArr);
+      return () => unsubscribe();
     });
   }, []);
+
+  // add sale to database
+  const addSale = async (e) => {
+    e.preventDefault();
+    if (user && newSale.product !== "" && newSale.quantity !== "") {
+      setIsOpen(true);
+      await addDoc(collection(db, "sales"), {
+        product: newSale.product,
+        quantity: newSale.quantity,
+        totalPrice: newSale.totalPrice,
+        cash: checked,
+        createdAt: serverTimestamp(),
+        uid: user.uid,
+      });
+      setNewSale({ product: "", quantity: "", totalPrice: "" });
+    }
+  };
 
   function renderTotal() {
     const salesLength = parseInt(sales.length);
@@ -134,12 +152,27 @@ export default function RecordSales() {
             type="number"
             placeholder="Quantity"
           />
-          <button
-            onClick={addSale}
-            className="rounded-md px-5 py-2.5 text-white text-center text-xs bg-red-500"
-          >
-            Record
-          </button>
+          <input
+            value={newSale.totalPrice}
+            onChange={(e) =>
+              setNewSale({ ...newSale, totalPrice: e.target.value })
+            }
+            className="text-sm border w-full px-5 py-2.5 rounded-md"
+            type="number"
+            placeholder="Total Price"
+          />
+          <div className="flex gap-2 ml-2">
+            <input
+              type="checkbox"
+              name="credit"
+              value={checked}
+              onChange={handleChange}
+            />
+            <label htmlFor="credit" className="text-sm text-neutral-700">
+              Cash Payment
+            </label>
+          </div>
+          <Button onClick={addSale} label="Record" styles="w-full" />
         </FlexCol>
       </Card>
 

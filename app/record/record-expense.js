@@ -20,6 +20,7 @@ import FlexCol from "../layout/flex-col";
 import Card from "../layout/card";
 import Confirmation from "../components/confirmation";
 import Expense from "./expense";
+import Button from "../layout/button";
 import { Tab } from "@headlessui/react";
 
 export default function RecordExpense() {
@@ -127,6 +128,7 @@ export default function RecordExpense() {
         expenseArr.push({ ...doc.data(), id: doc.id });
       });
       setExpenses(expenseArr);
+      return () => unsubscribe();
     });
   }, []);
 
@@ -257,13 +259,7 @@ export default function RecordExpense() {
                   </div> */}
             </>
           )}
-
-          <button
-            onClick={addExpense}
-            className="rounded-md px-5 py-2.5 text-white text-center text-xs bg-red-500"
-          >
-            Request
-          </button>
+          <Button onClick={addExpense} label="Request" styles="w-full" />
         </FlexCol>
       </Card>
       <Card>

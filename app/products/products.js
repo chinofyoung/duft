@@ -29,6 +29,7 @@ export default function Products() {
         itemsArr.push({ ...doc.data(), id: doc.id });
       });
       setItems(itemsArr);
+      return () => unsubscribe();
     });
   }, []);
 

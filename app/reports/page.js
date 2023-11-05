@@ -31,6 +31,7 @@ export default function Page() {
         salesArr.push({ ...doc.data(), id: doc.id });
       });
       setSales(salesArr);
+      return () => unsubscribe();
     });
   }, []);
 
