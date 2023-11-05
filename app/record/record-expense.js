@@ -103,7 +103,8 @@ export default function RecordExpense() {
         image: downloadURL,
         createdAt: serverTimestamp(),
         uid: user.uid,
-        approved: false,
+        approvedT: false,
+        approvedP: false,
       });
       setNewExpense({
         name: "",
