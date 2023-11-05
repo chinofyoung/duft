@@ -27,15 +27,29 @@ export default function Sales({ expense }) {
     });
   }, [expenseUser.uid]);
 
-  // approve expense
-  const approveExpense = async (id) => {
+  // approve expense tingtong
+  const approveExpenseT = async (id) => {
     await updateDoc(doc(db, "expenses", id), {
       approved: true,
     });
   };
 
-  // reject expense
-  const rejectExpense = async (id) => {
+  // approve expense peben
+  const approveExpenseP = async (id) => {
+    await updateDoc(doc(db, "expenses", id), {
+      approved: true,
+    });
+  };
+
+  // reject expenseT
+  const rejectExpenseT = async (id) => {
+    await updateDoc(doc(db, "expenses", id), {
+      approved: false,
+    });
+  };
+
+   // reject expenseP
+   const rejectExpenseP = async (id) => {
     await updateDoc(doc(db, "expenses", id), {
       approved: false,
     });
@@ -93,18 +107,40 @@ export default function Sales({ expense }) {
               <div className="flex flex-col">
                 <strong>Status:</strong>
                 <span>{expense.approved ? "approved" : "pending"}</span>
-                {user.uid === "tbuBqUOXP2TlqJmUM0VeYKwBEhY2" || user.uid === "aIrwQQEvjoN9aOuFsdyEd5hue5u2" && (
+
+                {/* tingtong approval */}
+                {user.uid === "tbuBqUOXP2TlqJmUM0VeYKwBEhY2" && (
                   <div className="flex gap-2 mt-2">
                     {expense.approved ? (
                       <button
-                        onClick={() => rejectExpense(expense.id)}
+                        onClick={() => rejectExpenseT(expense.id)}
                         className="bg-red-500 py-1 px-2 rounded-md text-white"
                       >
                         Reject
                       </button>
                     ) : (
                       <button
-                        onClick={() => approveExpense(expense.id)}
+                        onClick={() => approveExpenseT(expense.id)}
+                        className="bg-green-500 py-1 px-2 rounded-md text-white"
+                      >
+                        Approve
+                      </button>
+                    )}
+                  </div>
+                )}
+                {/* peben approval */}
+                {user.uid === "aIrwQQEvjoN9aOuFsdyEd5hue5u2" && (
+                  <div className="flex gap-2 mt-2">
+                    {expense.approved ? (
+                      <button
+                        onClick={() => rejectExpenseP(expense.id)}
+                        className="bg-red-500 py-1 px-2 rounded-md text-white"
+                      >
+                        Reject
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => approveExpenseP(expense.id)}
                         className="bg-green-500 py-1 px-2 rounded-md text-white"
                       >
                         Approve

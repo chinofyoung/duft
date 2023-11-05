@@ -36,7 +36,8 @@ export default function RecordExpense() {
     description: "",
     reference: "",
     image: "",
-    approved: false,
+    approvedT: false,
+    approvedP: false,
   });
 
   const handleSelectedFile = (files) => {
@@ -158,8 +159,8 @@ export default function RecordExpense() {
     );
   }
 
-  const pending = expenses.filter((expense) => expense.approved === false);
-  const approved = expenses.filter((expense) => expense.approved === true);
+  const pending = expenses.filter((expense) => expense.approvedT === false || expense.approvedP === false);
+  const approved = expenses.filter((expense) => expense.approvedT === true && expense.approvedP === true);
 
   return (
     <FlexCol>
