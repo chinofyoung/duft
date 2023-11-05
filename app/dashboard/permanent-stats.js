@@ -13,9 +13,8 @@ import Cash from "./permanent/cash";
 
 export default function PermanentStats() {
   return (
-    <Card>
+    <div className="bg-slate-200 p-4">
       <FlexCol>
-        <SubHeading>Permanent Accounts</SubHeading>
         <div className="grid grid-cols-2 gap-2 text-xs">
           <Cash />
           <Receivables />
@@ -25,6 +24,6 @@ export default function PermanentStats() {
           <Inventory />
         </div>
       </FlexCol>
-    </Card>
+    </div>
   );
 }

@@ -5,7 +5,7 @@ import Card from "../../layout/card";
 
 export default function Capital() {
   return (
-    <span className="flex flex-col bg-slate-200 p-2 rounded-md">
+    <span className="flex flex-col bg-slate-50 p-2 rounded-md">
       {/* total capital from tagsa tagsa na aragmot */}
       Capital: <strong className="text-lg">₱23,202</strong>
     </span>

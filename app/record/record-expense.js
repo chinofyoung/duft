@@ -190,24 +190,26 @@ export default function RecordExpense() {
             type="textarea"
             placeholder="Description"
           />
-          <input
-            value={newExpense.cost}
-            onChange={(e) =>
-              setNewExpense({ ...newExpense, cost: e.target.value })
-            }
-            className="text-sm border w-full px-5 py-2.5 rounded-md"
-            type="number"
-            placeholder="Cost"
-          />
-          <input
-            value={newExpense.reference}
-            onChange={(e) =>
-              setNewExpense({ ...newExpense, reference: e.target.value })
-            }
-            className="text-sm border w-full px-5 py-2.5 rounded-md"
-            type="number"
-            placeholder="Reference No."
-          />
+          <div className="grid grid-cols-2 gap-4">
+            <input
+              value={newExpense.cost}
+              onChange={(e) =>
+                setNewExpense({ ...newExpense, cost: e.target.value })
+              }
+              className="text-sm border w-full px-5 py-2.5 rounded-md"
+              type="number"
+              placeholder="Cost"
+            />
+            <input
+              value={newExpense.reference}
+              onChange={(e) =>
+                setNewExpense({ ...newExpense, reference: e.target.value })
+              }
+              className="text-sm border w-full px-5 py-2.5 rounded-md"
+              type="number"
+              placeholder="Reference No."
+            />
+          </div>
 
           {imageFile ? (
             ""

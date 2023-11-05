@@ -20,7 +20,7 @@ import Sales from "./sales";
 import Button from "../layout/button";
 
 export default function RecordSales() {
-  let [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const { user } = UserAuth();
   const [items, setItems] = useState([]);
   const [sales, setSales] = useState([]);
@@ -143,24 +143,26 @@ export default function RecordSales() {
                   );
                 })}
           </select>
-          <input
-            value={newSale.quantity}
-            onChange={(e) =>
-              setNewSale({ ...newSale, quantity: e.target.value })
-            }
-            className="text-sm border w-full px-5 py-2.5 rounded-md"
-            type="number"
-            placeholder="Quantity"
-          />
-          <input
-            value={newSale.totalPrice}
-            onChange={(e) =>
-              setNewSale({ ...newSale, totalPrice: e.target.value })
-            }
-            className="text-sm border w-full px-5 py-2.5 rounded-md"
-            type="number"
-            placeholder="Total Price"
-          />
+          <div className="grid grid-cols-2 gap-4">
+            <input
+              value={newSale.quantity}
+              onChange={(e) =>
+                setNewSale({ ...newSale, quantity: e.target.value })
+              }
+              className="text-sm border w-full px-5 py-2.5 rounded-md"
+              type="number"
+              placeholder="Quantity"
+            />
+            <input
+              value={newSale.totalPrice}
+              onChange={(e) =>
+                setNewSale({ ...newSale, totalPrice: e.target.value })
+              }
+              className="text-sm border w-full px-5 py-2.5 rounded-md"
+              type="number"
+              placeholder="Total Price"
+            />
+          </div>
           <div className="flex gap-2 ml-2">
             <input
               type="checkbox"

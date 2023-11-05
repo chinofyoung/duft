@@ -41,7 +41,7 @@ export default function Inventory() {
   }
   
   return (
-    <div className="flex flex-col gap-2 bg-slate-200 p-2 rounded-md">
+    <div className="flex flex-col gap-2 bg-slate-50 p-2 rounded-md">
       <span className="flex flex-col">
         Inventory:
         <strong className="text-lg">{renderTotalStocks()}</strong>

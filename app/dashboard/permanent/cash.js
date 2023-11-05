@@ -32,7 +32,7 @@ export default function Cash() {
   }
 
   return (
-    <span className="flex flex-col bg-slate-200 p-2 rounded-md">
+    <span className="flex flex-col bg-slate-50 p-2 rounded-md">
       {/* from sales, convert from receivable, capital can add, expenses can deduct, payable can add, retained earnings can deduct */}
       Cash: <strong className="text-lg">₱{renderTotal()}</strong>
     </span>

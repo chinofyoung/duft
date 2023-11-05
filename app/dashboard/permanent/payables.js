@@ -5,7 +5,7 @@ import Card from "../../layout/card";
 
 export default function Payables() {
   return (
-    <span className="flex flex-col bg-slate-200 p-2 rounded-md">
+    <span className="flex flex-col bg-slate-50 p-2 rounded-md">
       {/* inutang pwede mag add hin utang*/}
       Payable: <strong className="text-lg">₱13,120</strong>
     </span>

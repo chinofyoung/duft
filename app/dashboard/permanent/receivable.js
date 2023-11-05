@@ -32,7 +32,7 @@ export default function Receivables() {
   }
 
   return (
-    <span className="flex flex-col bg-slate-200 p-2 rounded-md">
+    <span className="flex flex-col bg-slate-50 p-2 rounded-md">
       {/* total receivables from tagsa tagsa */}
       Receivables: <strong className="text-lg">₱{renderTotal()}</strong>
     </span>
