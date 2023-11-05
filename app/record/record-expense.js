@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { message, Progress } from "antd";
+import { message, Progress, Image } from "antd";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import {
   collection,
@@ -12,7 +12,6 @@ import {
 } from "firebase/firestore";
 import { db, storage } from "../firebase";
 import { UserAuth } from "../context/auth-context";
-import Image from "next/image";
 import Padded from "../layout/padded";
 import MainHeading from "../layout/main-heading";
 import SubHeading from "../layout/sub-heading";
@@ -244,32 +243,24 @@ export default function RecordExpense() {
             <>
               <div className="flex flex-col items-center w-full">
                 {downloadURL && (
-                  <div className="w-24 h-24 rounded-lg overflow-hidden">
+                  <div className="max-h-[250px] rounded-lg overflow-hidden">
                     <Image
-                      className="object-cover border border-solid rounded-lg"
                       src={downloadURL}
                       alt="Uploaded Image"
-                      width={100}
-                      height={100}
+                      style={{ objectFit: "cover", borderRadius: "8px" }}
                     />
                   </div>
                 )}
-                <div className="flex flex-col gap-4 w-full items-center">
+                <div className="flex flex-col  w-full items-end">
                   <Progress percent={progressUpload} status="active" />
-                  <div className="flex gap-4">
-                    <button
+                  <div className="flex gap-2">
+                    <Button
                       onClick={handleRemoveFile}
-                      className="rounded-md px-5 py-2.5 text-white text-center text-xs bg-neutral-500"
-                    >
-                      Remove
-                    </button>
-
-                    <button
-                      onClick={handleUploadFile}
-                      className="rounded-md px-5 py-2.5 text-white text-center text-xs bg-blue-500"
-                    >
-                      Upload
-                    </button>
+                      label="Remove"
+                      secondary
+                      small
+                    />
+                    <Button onClick={handleUploadFile} label="Upload" small />
                   </div>
                 </div>
               </div>

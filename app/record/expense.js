@@ -89,7 +89,7 @@ export default function Sales({ expense }) {
               </div>
               <div className="flex flex-col">
                 <strong>Reference #</strong>
-                <span>{expense.reference}</span>
+                <span>{expense.reference ? expense.reference : "Not available"}</span>
               </div>
             </div>
             <div className="flex flex-col">
