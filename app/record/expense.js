@@ -48,8 +48,8 @@ export default function Sales({ expense }) {
     });
   };
 
-   // reject expenseP
-   const rejectExpenseP = async (id) => {
+  // reject expenseP
+  const rejectExpenseP = async (id) => {
     await updateDoc(doc(db, "expenses", id), {
       approved: false,
     });
@@ -152,18 +152,26 @@ export default function Sales({ expense }) {
 
               <div className="flex gap-2">
                 <div className="relative">
-                  <AiFillCheckCircle className="text-sm bg-white rounded-full absolute bottom-0 right-0 text-green-500" />
+                  {expense.approvedT ? (
+                    <AiFillCheckCircle className="text-sm bg-white rounded-full absolute bottom-0 right-0 text-green-500" />
+                  ) : (
+                    <AiFillMinusCircle className="text-sm bg-white rounded-full absolute bottom-0 right-0 text-orange-500" />
+                  )}
                   <img
                     className="w-8 h-8 rounded-full"
-                    src="https://thispersondoesnotexist.com/"
+                    src="https://lh3.googleusercontent.com/a/ACg8ocIYCJfVmhmYgrZ5tzDORh3Bwn-PRzVUgfMB2DFVE705=s96-c"
                   />
                 </div>
 
                 <div className="relative">
-                  <AiFillMinusCircle className="text-sm bg-white rounded-full absolute bottom-0 right-0 text-orange-500" />
+                  {expense.approvedP ? (
+                    <AiFillCheckCircle className="text-sm bg-white rounded-full absolute bottom-0 right-0 text-green-500" />
+                  ) : (
+                    <AiFillMinusCircle className="text-sm bg-white rounded-full absolute bottom-0 right-0 text-orange-500" />
+                  )}
                   <img
                     className="w-8 h-8 rounded-full"
-                    src="https://thispersondoesnotexist.com/"
+                    src="https://lh3.googleusercontent.com/a/ACg8ocJutxQsqRI_sKxWjN0ggE_1bcGURVL5IfMSFlt4p5flOA=s96-c"
                   />
                 </div>
               </div>
