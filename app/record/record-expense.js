@@ -255,7 +255,7 @@ export default function RecordExpense() {
                   </div>
                 )}
                 <div className="flex flex-col gap-4 w-full items-center">
-                  <Progress percent={50} status="active" />
+                  <Progress percent={progressUpload} status="active" />
                   <div className="flex gap-4">
                     <button
                       onClick={handleRemoveFile}
