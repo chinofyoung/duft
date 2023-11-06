@@ -16,7 +16,7 @@ export default function AddProduct() {
     name: "",
     price: "",
     cost: "",
-    quantity: "",
+    stock: "",
     image: "",
   });
 
@@ -29,11 +29,11 @@ export default function AddProduct() {
         name: newItem.name.trim(),
         price: newItem.price,
         cost: newItem.cost,
-        quantity: newItem.quantity,
+        stock: newItem.stock,
         image: newItem.image,
         createdAt: serverTimestamp(),
       });
-      setNewItem({ name: "", price: "", cost: "", quantity: "", image: "" });
+      setNewItem({ name: "", price: "", cost: "", stock: "", image: "" });
     }
   };
 
@@ -81,13 +81,13 @@ export default function AddProduct() {
                   placeholder="Cost per product"
                 />
                 <input
-                  value={newItem.quantity}
+                  value={newItem.stock}
                   onChange={(e) =>
-                    setNewItem({ ...newItem, quantity: e.target.value })
+                    setNewItem({ ...newItem, stock: e.target.value })
                   }
                   className="text-sm border w-full px-5 py-2.5 rounded-md"
                   type="number"
-                  placeholder="Quantity"
+                  placeholder="Stock"
                 />
                 <input
                   value={newItem.image}

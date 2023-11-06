@@ -24,7 +24,7 @@ export default function Inventory() {
     let stocksLength = parseInt(items.length);
     let totalStocks = 0;
     for (let i = 0; i < stocksLength; i++) {
-      totalStocks = parseInt(items[i]?.quantity) + totalStocks;
+      totalStocks = parseInt(items[i]?.stock) + totalStocks;
     }
     return totalStocks;
   }
@@ -35,7 +35,7 @@ export default function Inventory() {
     let totalCost = 0;
     for (let i = 0; i < stocksLength; i++) {
       totalCost =
-        parseInt(items[i]?.cost) * parseInt(items[i]?.quantity) + totalCost;
+        parseInt(items[i]?.cost) * parseInt(items[i]?.stock) + totalCost;
     }
     return totalCost.toLocaleString("en-US");
   }

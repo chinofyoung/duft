@@ -80,7 +80,7 @@ export default function Products() {
                             Cost: <strong>₱{item.cost}</strong>
                           </span>
                           <span>
-                            Stock: <strong>{item.quantity}</strong>
+                            Stock: <strong>{item.stock}</strong>
                           </span>
                         </div>
                         <div className="flex self-end gap-2">

@@ -12,7 +12,7 @@ import {
 import { UserAuth } from "../context/auth-context";
 
 export default function Sales({ expense }) {
-  const [expenseUser, setexpenseUser] = useState({});
+  const [expenseUser, setExpenseUser] = useState({});
   const { user } = UserAuth();
   const pebenId = "tbuBqUOXP2TlqJmUM0VeYKwBEhY2";
   const chinoId = "UXQ7tG2XoqTmrbks3eUOlkBhNo92";
@@ -27,7 +27,7 @@ export default function Sales({ expense }) {
 
   useEffect(() => {
     onSnapshot(doc(db, "users", expense.uid), (snapshot) => {
-      setexpenseUser(snapshot.data() || {});
+      setExpenseUser(snapshot.data() || {});
     });
   }, [expenseUser.uid]);
 

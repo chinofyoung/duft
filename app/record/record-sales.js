@@ -1,8 +1,10 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import {
+  doc,
   collection,
   addDoc,
+  updateDoc,
   serverTimestamp,
   query,
   onSnapshot,
@@ -20,8 +22,8 @@ import Sales from "./sales";
 import Button from "../layout/button";
 
 export default function RecordSales() {
-  const [isOpen, setIsOpen] = useState(false);
   const { user } = UserAuth();
+  const [isOpen, setIsOpen] = useState(false);
   const [items, setItems] = useState([]);
   const [sales, setSales] = useState([]);
   const [checked, setChecked] = useState([]);
@@ -55,23 +57,8 @@ export default function RecordSales() {
     });
   }, []);
 
-  // read sales from database
-  useEffect(() => {
-    const q = query(collection(db, "sales"), orderBy("createdAt", "desc"));
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      let salesArr = [];
-
-      querySnapshot.forEach((doc) => {
-        salesArr.push({ ...doc.data(), id: doc.id });
-      });
-      setSales(salesArr);
-      return () => unsubscribe();
-    });
-  }, []);
-
   // add sale to database
-  const addSale = async (e) => {
-    e.preventDefault();
+  const addSale = async (id) => {
     if (user && newSale.product !== "" && newSale.quantity !== "") {
       setIsOpen(true);
       await addDoc(collection(db, "sales"), {
@@ -85,6 +72,20 @@ export default function RecordSales() {
       setNewSale({ product: "", quantity: "", totalPrice: "" });
     }
   };
+
+  // read sales from database
+  useEffect(() => {
+    const q = query(collection(db, "sales"), orderBy("createdAt", "desc"));
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      let salesArr = [];
+
+      querySnapshot.forEach((doc) => {
+        salesArr.push({ ...doc.data(), id: doc.id });
+      });
+      setSales(salesArr);
+      return () => unsubscribe();
+    });
+  }, []);
 
   function renderTotal() {
     const salesLength = parseInt(sales.length);
@@ -143,6 +144,7 @@ export default function RecordSales() {
                   );
                 })}
           </select>
+
           <div className="grid grid-cols-2 gap-4">
             <input
               value={newSale.quantity}
