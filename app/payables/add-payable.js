@@ -66,7 +66,7 @@ export default function AddPayable() {
         <Disclosure>
           <FlexCol>
             <Disclosure.Button className="flex justify-between items-center">
-              <SubHeading>Add Payable</SubHeading>
+              <SubHeading>Add Record</SubHeading>
               <AiOutlineRight className="ml-auto ui-open:rotate-90 ui-open:transform" />
             </Disclosure.Button>
             <Disclosure.Panel>

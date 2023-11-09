@@ -19,7 +19,7 @@ export default function Receivables() {
     });
   }, []);
 
-  // credit sales
+  // receivable sales
   const cashSales = sales.filter((sale) => sale.cash === false);
 
   function renderTotal() {

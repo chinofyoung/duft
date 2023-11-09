@@ -10,6 +10,8 @@ import Earnings from "./permanent/earnings";
 import Capital from "./permanent/capital";
 import Receivables from "./permanent/receivable";
 import Cash from "./permanent/cash";
+import { PayablesContextProvider } from "../context/payables-context";
+import { ExpensesContextProvider } from "../context/expenses-context";
 
 export default function PermanentStats() {
   return (
@@ -20,7 +22,11 @@ export default function PermanentStats() {
           <Receivables />
           <Capital />
           <Earnings />
-          <Payables />
+          <ExpensesContextProvider>
+            <PayablesContextProvider>
+              <Payables />
+            </PayablesContextProvider>
+          </ExpensesContextProvider>
           <Inventory />
         </div>
       </FlexCol>
