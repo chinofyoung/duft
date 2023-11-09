@@ -88,7 +88,7 @@ export default function AddPayable() {
                     }
                     className="text-sm border w-full px-5 py-2.5 rounded-md"
                     type="number"
-                    placeholder="Price"
+                    placeholder="Cost"
                   />
                   <input
                     value={newPayable.source}

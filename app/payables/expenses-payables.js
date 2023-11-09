@@ -18,10 +18,13 @@ export default function ExpensesPayables({ expense }) {
     <li className="flex flex-col gap-2 bg-slate-100 p-2 pr-4 rounded-md">
       <Disclosure>
         <Disclosure.Button>
-          <div className="flex items-center py-2 pl-2 gap-4">
+          <div className="flex items-center py-2 pl-2 gap-1">
             <span className="text-sm font-bold text-left">
-              {expense.name.substring(0, 33)}
-              {expense.name.length > 32 && "..."}
+              {expense.name.substring(0, 25)}
+              {expense.name.length > 24 && "..."}
+            </span>
+            <span className="text-xs">
+              / ₱{expense.cost.toLocaleString("en-US")}
             </span>
             <AiOutlineRight className="ml-auto text-base ui-open:rotate-90 ui-open:transform" />
           </div>
@@ -61,10 +64,7 @@ export default function ExpensesPayables({ expense }) {
               </span>
             </div>
             <div className="flex items-center gap-2">
-              <img
-                className="w-6 h-6 rounded-full"
-                src={user.photoURL}
-              />
+              <img className="w-6 h-6 rounded-full" src={user.photoURL} />
               <span className="font-bold">{user.displayName}</span>
             </div>
           </div>

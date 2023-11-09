@@ -14,7 +14,7 @@ export default function Page() {
       <ExpensesContextProvider>
         <Padded>
           <FlexCol>
-            <MainHeading>Payabless</MainHeading>
+            <MainHeading>Payables</MainHeading>
             <TotalPayables />
             <AddPayable />
           </FlexCol>
