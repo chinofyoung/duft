@@ -64,17 +64,17 @@ export default function AddProduct() {
             <AiOutlineRight className="ml-auto ui-open:rotate-90 ui-open:transform" />
           </Disclosure.Button>
           <Disclosure.Panel>
-            <form>
-              <FlexCol>
-                <input
-                  value={newItem.name}
-                  onChange={(e) =>
-                    setNewItem({ ...newItem, name: e.target.value })
-                  }
-                  className="text-sm border w-full px-5 py-2.5 rounded-md"
-                  type="text"
-                  placeholder="Name"
-                />
+            <FlexCol>
+              <input
+                value={newItem.name}
+                onChange={(e) =>
+                  setNewItem({ ...newItem, name: e.target.value })
+                }
+                className="text-sm border w-full px-5 py-2.5 rounded-md"
+                type="text"
+                placeholder="Name"
+              />
+              <div className="grid grid-cols-2 gap-4">
                 <input
                   value={newItem.price}
                   onChange={(e) =>
@@ -111,14 +111,14 @@ export default function AddProduct() {
                   type="text"
                   placeholder="Image"
                 />
-                <button
-                  onClick={addItem}
-                  className="rounded-md px-5 py-2.5 text-white text-center text-xs bg-red-500"
-                >
-                  Add
-                </button>
-              </FlexCol>
-            </form>
+              </div>
+              <button
+                onClick={addItem}
+                className="rounded-md px-5 py-2.5 text-white text-center text-xs bg-red-500"
+              >
+                Add
+              </button>
+            </FlexCol>
           </Disclosure.Panel>
         </FlexCol>
       </Disclosure>
