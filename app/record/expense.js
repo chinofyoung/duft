@@ -8,15 +8,14 @@ import {
   AiFillCheckCircle,
   AiFillMinusCircle,
 } from "react-icons/ai";
-// import Image from "next/image";
 import { UserAuth } from "../context/auth-context";
 
 export default function Sales({ expense }) {
-  const [expenseUser, setExpenseUser] = useState({});
   const { user } = UserAuth();
   const pebenId = "tbuBqUOXP2TlqJmUM0VeYKwBEhY2";
   const chinoId = "UXQ7tG2XoqTmrbks3eUOlkBhNo92";
   const martinId = "aIrwQQEvjoN9aOuFsdyEd5hue5u2";
+  const [expenseUser, setExpenseUser] = useState({});
 
   useEffect(() => {
     const checkAuthentication = async () => {
@@ -64,7 +63,7 @@ export default function Sales({ expense }) {
       <Disclosure>
         <Disclosure.Button>
           <div className="flex items-center py-2 pl-2 gap-4">
-            <span className="text-sm font-bold">{expense.name}</span>
+            <span className="text-sm font-bold text-left">{expense.name.substring(0, 33)}...</span>
             <AiOutlineRight className="ml-auto text-base ui-open:rotate-90 ui-open:transform" />
           </div>
         </Disclosure.Button>
@@ -89,7 +88,9 @@ export default function Sales({ expense }) {
               </div>
               <div className="flex flex-col">
                 <strong>Reference #</strong>
-                <span>{expense.reference ? expense.reference : "Not available"}</span>
+                <span>
+                  {expense.reference ? expense.reference : "Not available"}
+                </span>
               </div>
             </div>
             <div className="flex flex-col">

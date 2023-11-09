@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "../firebase";
 import { Disclosure } from "@headlessui/react";
@@ -8,10 +8,14 @@ import Card from "../layout/card";
 import FlexCol from "../layout/flex-col";
 import SubHeading from "../layout/sub-heading";
 import Confirmation from "../components/confirmation";
+import { UserAuth } from "../context/auth-context";
 
 export default function AddProduct() {
-  let [isOpen, setIsOpen] = useState(false);
-
+  const { user } = UserAuth();
+  const pebenId = "tbuBqUOXP2TlqJmUM0VeYKwBEhY2";
+  const chinoId = "UXQ7tG2XoqTmrbks3eUOlkBhNo92";
+  const martinId = "aIrwQQEvjoN9aOuFsdyEd5hue5u2";
+  const [isOpen, setIsOpen] = useState(false);
   const [newItem, setNewItem] = useState({
     name: "",
     price: "",
@@ -19,6 +23,13 @@ export default function AddProduct() {
     stock: "",
     image: "",
   });
+
+  useEffect(() => {
+    const checkAuthentication = async () => {
+      await new Promise((resolve) => setTimeout(resolve, 50));
+    };
+    checkAuthentication();
+  }, [user]);
 
   // add item to database
   const addItem = async (e) => {
@@ -44,6 +55,7 @@ export default function AddProduct() {
         heading="Product Added!"
         message="Product has successfully been added!"
       />
+
       <Disclosure>
         <FlexCol>
           <Disclosure.Button className="flex justify-between items-center">

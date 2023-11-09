@@ -9,6 +9,7 @@ import {
   query,
   onSnapshot,
   orderBy,
+  runTransaction
 } from "firebase/firestore";
 import { db } from "../firebase";
 import Padded from "../layout/padded";
@@ -68,7 +69,21 @@ export default function RecordSales() {
         cash: checked,
         createdAt: serverTimestamp(),
         uid: user.uid,
+        productId: newSale.productId,
       });
+      const itemRef = doc(db, "items", newSale.productId);
+      await runTransaction(db, async (t) => {
+        const item = await t.get(itemRef);
+        console.log(item)
+        if (!item) return;
+        const itemStock = item.data().stock - newSale.quantity;
+        if (itemStock >= 0) {
+           t.update(itemRef, { stock: itemStock })
+         }
+      })
+      // await updateDoc(doc(db, "items", newSale.productId), {
+      //   stock: stock - newSale.quantity,
+      // });
       setNewSale({ product: "", quantity: "", totalPrice: "" });
     }
   };
@@ -127,9 +142,10 @@ export default function RecordSales() {
           <select
             className="border rounded-md py-2.5 px-2 text-neutral-700"
             defaultValue={"Choose a product"}
-            onChange={(e) =>
-              setNewSale({ ...newSale, product: e.target.value })
-            }
+            onChange={(e) => {
+              const [productId, product] = e.target.value.split(":");
+              setNewSale({ ...newSale, productId, product });
+            }}
           >
             <option disabled hidden>
               Choose a product
@@ -138,7 +154,7 @@ export default function RecordSales() {
               ? "loading"
               : items.map((item, index) => {
                   return (
-                    <option key={index} value={item.name}>
+                    <option key={index} value={`${item.id}:${item.name}`}>
                       {item.name}
                     </option>
                   );
