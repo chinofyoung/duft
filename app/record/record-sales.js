@@ -1,13 +1,10 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import {
   doc,
   collection,
   addDoc,
   serverTimestamp,
-  query,
-  onSnapshot,
-  orderBy,
   runTransaction,
 } from "firebase/firestore";
 import { db } from "../firebase";
@@ -20,13 +17,15 @@ import { UserAuth } from "../context/auth-context";
 import Confirmation from "../components/confirmation";
 import Sales from "./sales";
 import Button from "../layout/button";
+import { SalesContext } from "../context/sales-context";
+import { ItemsContext } from "../context/items-context";
 
 export default function RecordSales() {
   const { user } = UserAuth();
   const [isOpen, setIsOpen] = useState(false);
-  const [items, setItems] = useState([]);
-  const [sales, setSales] = useState([]);
-  const [checked, setChecked] = useState(true);
+  const { sales } = useContext(SalesContext);
+  const { items } = useContext(ItemsContext);
+  const [checked, setChecked] = useState(false);
   const [newSale, setNewSale] = useState({
     product: "",
     quantity: "",
@@ -37,28 +36,18 @@ export default function RecordSales() {
   // checkbox
   const handleChange = (e) => {
     if (e.target.checked) {
-      setChecked(false);
-    } else {
       setChecked(true);
+    } else {
+      setChecked(false);
     }
   };
 
-  // read items from database
-  useEffect(() => {
-    const q = query(collection(db, "items"));
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      let itemsArr = [];
-
-      querySnapshot.forEach((doc) => {
-        itemsArr.push({ ...doc.data(), id: doc.id });
-      });
-      setItems(itemsArr);
-      return () => unsubscribe();
-    });
-  }, []);
+  // credit sales
+  const inStock = items.filter((item) => item.stock > 0);
 
   // add sale to database
-  const addSale = async (id) => {
+  const addSale = async (e) => {
+    e.preventDefault();
     if (user && newSale.product !== "" && newSale.quantity !== "") {
       setIsOpen(true);
       await addDoc(collection(db, "sales"), {
@@ -82,20 +71,6 @@ export default function RecordSales() {
       setNewSale({ product: "", quantity: "", totalPrice: "" });
     }
   };
-
-  // read sales from database
-  useEffect(() => {
-    const q = query(collection(db, "sales"), orderBy("createdAt", "desc"));
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      let salesArr = [];
-
-      querySnapshot.forEach((doc) => {
-        salesArr.push({ ...doc.data(), id: doc.id });
-      });
-      setSales(salesArr);
-      return () => unsubscribe();
-    });
-  }, []);
 
   function renderTotal() {
     const salesLength = parseInt(sales.length);
@@ -146,9 +121,9 @@ export default function RecordSales() {
             <option disabled hidden>
               Choose a product
             </option>
-            {!items
+            {!inStock
               ? "loading"
-              : items.map((item, index) => {
+              : inStock.map((item, index) => {
                   return (
                     <option key={index} value={`${item.id}:${item.name}`}>
                       {item.name}
@@ -185,7 +160,7 @@ export default function RecordSales() {
               onChange={handleChange}
             />
             <label htmlFor="credit" className="text-sm text-neutral-700">
-              Receivable?
+              Paid
             </label>
           </div>
           <Button onClick={addSale} label="Record" styles="w-full" />

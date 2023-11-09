@@ -5,17 +5,20 @@ import FlexCol from "../layout/flex-col";
 import MainHeading from "../layout/main-heading";
 import Products from "./products";
 import AddProduct from "./add-product";
+import { ItemsContextProvider } from "../context/items-context";
 
 export default function Page() {
   return (
-    <Padded>
-      <FlexCol>
-        <MainHeading>Products</MainHeading>
+    <ItemsContextProvider>
+      <Padded>
         <FlexCol>
-          <AddProduct />
-          <Products />
+          <MainHeading>Products</MainHeading>
+          <FlexCol>
+            <AddProduct />
+            <Products />
+          </FlexCol>
         </FlexCol>
-      </FlexCol>
-    </Padded>
+      </Padded>
+    </ItemsContextProvider>
   );
 }

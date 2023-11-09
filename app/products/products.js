@@ -1,13 +1,6 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import {
-  collection,
-  query,
-  onSnapshot,
-  deleteDoc,
-  orderBy,
-  doc,
-} from "firebase/firestore";
+import React, { useState, useContext } from "react";
+import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "../firebase";
 import { Disclosure } from "@headlessui/react";
 import { AiOutlineRight } from "react-icons/ai";
@@ -15,24 +8,11 @@ import Card from "../layout/card";
 import Button from "../layout/button";
 import SubHeading from "../layout/sub-heading";
 import Confirmation from "../components/confirmation";
+import { ItemsContext } from "../context/items-context";
 
 export default function Products() {
   let [isOpen, setIsOpen] = useState(false);
-  const [items, setItems] = useState([]);
-
-  // read items from database
-  useEffect(() => {
-    const q = query(collection(db, "items"), orderBy("name", "desc"));
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      let itemsArr = [];
-
-      querySnapshot.forEach((doc) => {
-        itemsArr.push({ ...doc.data(), id: doc.id });
-      });
-      setItems(itemsArr);
-      return () => unsubscribe();
-    });
-  }, []);
+  const { items } = useContext(ItemsContext);
 
   // delete items from database
   const deleteItem = async (id) => {

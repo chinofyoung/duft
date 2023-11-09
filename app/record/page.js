@@ -5,6 +5,8 @@ import RecordSales from "./record-sales";
 import RecordExpense from "./record-expense";
 import Padded from "../layout/padded";
 import MainHeading from "../layout/main-heading";
+import { SalesContextProvider } from "../context/sales-context";
+import { ItemsContextProvider } from "../context/items-context";
 
 export default function Page() {
   return (
@@ -37,7 +39,11 @@ export default function Page() {
         </Tab.List>
         <Tab.Panels>
           <Tab.Panel>
-            <RecordSales />
+            <ItemsContextProvider>
+              <SalesContextProvider>
+                <RecordSales />
+              </SalesContextProvider>
+            </ItemsContextProvider>
           </Tab.Panel>
           <Tab.Panel>
             <RecordExpense />
