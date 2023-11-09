@@ -2,11 +2,11 @@ import { doc, onSnapshot } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { db } from "../firebase";
 
-export default function Sales({ sale }) {
+export default function Payables({ payable }) {
   const [user, setUser] = useState({});
-  
+
   useEffect(() => {
-    onSnapshot(doc(db, "users", sale.uid), (snapshot) => {
+    onSnapshot(doc(db, "users", payable.uid), (snapshot) => {
       setUser(snapshot.data() || {});
     });
   }, [user.uid]);
@@ -14,24 +14,17 @@ export default function Sales({ sale }) {
   return (
     <li className="flex justify-between items-start gap-2 bg-slate-100 p-2 rounded-md">
       <div className="flex flex-col gap-2">
-        <div className="flex gap-2">
-          <span>{sale.product}</span>
-          <span className="font-bold">x{sale.quantity}</span>
-        </div>
-        <div className="flex gap-2 items-center">
-          <span
-            className={`rounded-md text-xs px-1 text-white ${
-              sale.cash ? "bg-green-500" : "bg-orange-500"
-            }`}
-          >
-            {sale.cash ? "Cash" : "Receivable"}
-          </span>
-          <span className="font-bold">₱{sale.totalPrice}</span>
+        <div className="flex flex-col gap-2">
+          <span className="font-bold">{payable.name}</span>
+          <div className="flex gap-4">
+            <span>₱{payable.cost.toLocaleString("en-US")}</span>
+            <span>from {payable.source}</span>
+          </div>
         </div>
       </div>
       <div className="flex flex-col items-end gap-2">
         <span className="font-bold">
-          {new Date(sale?.createdAt?.seconds * 1000).toLocaleDateString(
+          {new Date(payable?.createdAt?.seconds * 1000).toLocaleDateString(
             "en-US"
           )}
         </span>

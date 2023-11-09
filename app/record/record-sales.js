@@ -177,7 +177,7 @@ export default function RecordSales() {
         <ul className="text-xs flex flex-col gap-1 text-slate-700 mt-2">
           {!sales
             ? "loading"
-            : sales.slice(0, 5).map((sale, index) => {
+            : sales.map((sale, index) => {
                 return <Sales sale={sale} key={`sales-${index}`} />;
               })}
         </ul>
