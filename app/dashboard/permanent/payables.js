@@ -6,7 +6,7 @@ export default function Payables() {
   return (
     <span className="flex flex-col bg-slate-50 p-2 rounded-md">
       {/* inutang pwede mag add hin utang*/}
-      Payable: <strong className="text-lg">₱12,000</strong>
+      Payables: <strong className="text-lg">₱12,000</strong>
     </span>
   );
 }

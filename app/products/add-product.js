@@ -52,6 +52,7 @@ export default function AddProduct() {
     <Card>
       <Confirmation
         openDialog={isOpen}
+        onClose={() => setIsOpen(false)}
         heading="Product Added!"
         message="Product has successfully been added!"
       />

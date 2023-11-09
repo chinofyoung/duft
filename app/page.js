@@ -9,6 +9,7 @@ import PermanentStats from "./dashboard/permanent-stats";
 import LargeLinks from "./dashboard/large-links";
 import SmallLinks from "./dashboard/small-links";
 import Login from "./components/login";
+import { SalesContextProvider } from "./context/sales-context";
 
 export default function Home() {
   const { user } = UserAuth();
@@ -52,7 +53,9 @@ export default function Home() {
               <SmallLinks />
             </FlexCol>
           </Padded>
-          <Stats />
+          <SalesContextProvider>
+            <Stats />
+          </SalesContextProvider>
         </>
       ) : (
         <Login />

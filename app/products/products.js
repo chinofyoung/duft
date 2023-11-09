@@ -44,6 +44,7 @@ export default function Products() {
     <Card>
       <Confirmation
         openDialog={isOpen}
+        onClose={() => setIsOpen(false)}
         heading="Product deleted!"
         message="Product has been successfully deleted!"
       />
@@ -55,7 +56,9 @@ export default function Products() {
               return (
                 <li
                   key={index}
-                  className="flex flex-col items-start gap-2 bg-slate-100 p-2 rounded-md"
+                  className={`flex flex-col items-start gap-2 p-2 rounded-md ${
+                    item.stock < 1 ? "bg-red-50" : "bg-slate100"
+                  }`}
                 >
                   <Disclosure>
                     <Disclosure.Button className="flex items-center justify-start gap-2 w-full">
@@ -65,8 +68,18 @@ export default function Products() {
                           item.image ? item.image : "https://placehold.co/48x48"
                         }
                       />
-                      <span className="p-2 inline text-sm text-slate-700 font-bold">
+                      <span className="p-2 text-sm text-slate-700 font-bold flex w-full">
                         {item.name}
+                        {item.stock < 1 && (
+                          <span className="text-xs ml-auto font-normal">
+                            Out of stock
+                          </span>
+                        )}
+                        {item.stock > 0 && item.stock < 5 && (
+                          <span className="text-xs ml-auto font-normal">
+                            {item.stock} items left
+                          </span>
+                        )}
                       </span>
                       <AiOutlineRight className="ml-auto ui-open:rotate-90 ui-open:transform" />
                     </Disclosure.Button>

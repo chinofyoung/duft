@@ -7,7 +7,7 @@ export default function Capital() {
   return (
     <span className="flex flex-col bg-slate-50 p-2 rounded-md">
       {/* total capital from tagsa tagsa na aragmot */}
-      Capital: <strong className="text-lg">₱23,202</strong>
+      Capital: <strong className="text-lg">₱211,497</strong>
     </span>
   );
 }

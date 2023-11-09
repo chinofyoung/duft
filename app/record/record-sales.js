@@ -4,12 +4,11 @@ import {
   doc,
   collection,
   addDoc,
-  updateDoc,
   serverTimestamp,
   query,
   onSnapshot,
   orderBy,
-  runTransaction
+  runTransaction,
 } from "firebase/firestore";
 import { db } from "../firebase";
 import Padded from "../layout/padded";
@@ -27,20 +26,20 @@ export default function RecordSales() {
   const [isOpen, setIsOpen] = useState(false);
   const [items, setItems] = useState([]);
   const [sales, setSales] = useState([]);
-  const [checked, setChecked] = useState([]);
+  const [checked, setChecked] = useState(true);
   const [newSale, setNewSale] = useState({
     product: "",
     quantity: "",
     totalPrice: "",
-    cash: false,
+    cash: "",
   });
 
   // checkbox
   const handleChange = (e) => {
     if (e.target.checked) {
-      setChecked(true);
-    } else {
       setChecked(false);
+    } else {
+      setChecked(true);
     }
   };
 
@@ -74,16 +73,12 @@ export default function RecordSales() {
       const itemRef = doc(db, "items", newSale.productId);
       await runTransaction(db, async (t) => {
         const item = await t.get(itemRef);
-        console.log(item)
         if (!item) return;
         const itemStock = item.data().stock - newSale.quantity;
         if (itemStock >= 0) {
-           t.update(itemRef, { stock: itemStock })
-         }
-      })
-      // await updateDoc(doc(db, "items", newSale.productId), {
-      //   stock: stock - newSale.quantity,
-      // });
+          t.update(itemRef, { stock: itemStock });
+        }
+      });
       setNewSale({ product: "", quantity: "", totalPrice: "" });
     }
   };
@@ -133,6 +128,7 @@ export default function RecordSales() {
       <Card>
         <Confirmation
           openDialog={isOpen}
+          onClose={() => setIsOpen(false)}
           heading="Sales Added!"
           message="Sales has successfully been recorded!"
         />
@@ -189,7 +185,7 @@ export default function RecordSales() {
               onChange={handleChange}
             />
             <label htmlFor="credit" className="text-sm text-neutral-700">
-              Cash Payment
+              Receivable?
             </label>
           </div>
           <Button onClick={addSale} label="Record" styles="w-full" />

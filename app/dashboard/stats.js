@@ -4,6 +4,31 @@ import { SalesContext } from "../context/sales-context";
 export default function Stats() {
   const { sales } = useContext(SalesContext);
 
+  function renderSalesDetails() {
+    const salesLength = parseInt(sales.length);
+    let totalSales = 0;
+    let bottlesSold = 0;
+
+    for (let i = 0; i < salesLength; i++) {
+      totalSales = parseInt(sales[i]?.totalPrice) + totalSales;
+      bottlesSold = parseInt(sales[i]?.quantity) + bottlesSold;
+    }
+
+    return (
+      <div className="flex flex-col text-white">
+        <span className="text-xs">
+          Total Sales: <strong>{totalSales.toLocaleString("en-US")}</strong>
+        </span>
+        <span className="text-xs">
+          Bottles Sold: <strong>{bottlesSold}</strong>
+        </span>
+        {/* <span className="text-xs">
+          Net Profit: <strong>15,240</strong>
+        </span> */}
+      </div>
+    );
+  }
+
   return (
     <div className="gap-4 flex bg-slate-300 p-4 flex-col">
       <div className="flex gap-2 text-xs mt-2">
@@ -23,17 +48,7 @@ export default function Stats() {
       <div className="grid grid-cols-2 gap-2">
         <div className="bg-lime-600 rounded-md p-4 shadow-sm">
           <h3 className="text-lg text-white">Sales</h3>
-          <div className="flex flex-col text-white">
-            <span className="text-xs">
-              Gross Sales: <strong>23,240</strong>
-            </span>
-            <span className="text-xs">
-              Bottles Sold: <strong>87</strong>
-            </span>
-            <span className="text-xs">
-              Net Profit: <strong>15,240</strong>
-            </span>
-          </div>
+          {renderSalesDetails()}
         </div>
         <div className="bg-red-500 rounded-md p-4 shadow-sm">
           <h3 className="text-lg text-white">Expenses</h3>
@@ -64,13 +79,6 @@ export default function Stats() {
               Total: <strong>16,430</strong>
             </span>
           </div>
-        </div>
-
-        <div>
-          {/* {console.log(sales)} */}
-          {/* {sales.map((sale, index) => {
-            return <div>{sale.product} test</div>;
-          })} */}
         </div>
       </div>
     </div>

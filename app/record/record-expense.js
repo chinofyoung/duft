@@ -171,6 +171,7 @@ export default function RecordExpense() {
     <FlexCol>
       <Confirmation
         openDialog={isOpen}
+        onClose={() => setIsOpen(false)}
         heading="Expense Added!"
         message="Expense has successfully been recorded!"
       />

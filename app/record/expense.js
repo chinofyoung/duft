@@ -63,7 +63,10 @@ export default function Sales({ expense }) {
       <Disclosure>
         <Disclosure.Button>
           <div className="flex items-center py-2 pl-2 gap-4">
-            <span className="text-sm font-bold text-left">{expense.name.substring(0, 33)}...</span>
+            <span className="text-sm font-bold text-left">
+              {expense.name.substring(0, 33)}
+              {expense.name.length > 32 && "..."}
+            </span>
             <AiOutlineRight className="ml-auto text-base ui-open:rotate-90 ui-open:transform" />
           </div>
         </Disclosure.Button>
