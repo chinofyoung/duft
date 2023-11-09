@@ -10,7 +10,7 @@ export default function TotalPayables() {
 
   function renderTotal() {
     const payablesLength = parseInt(payables.length);
-    const expensesLength = parseInt(payables.length);
+    const expensesLength = parseInt(pending.length);
     let totalPayables = 0;
     let totalExpenses = 0;
 
@@ -27,7 +27,9 @@ export default function TotalPayables() {
   return (
     <Card>
       <SubHeading>Summary</SubHeading>
-      <span className="text-sm">Total Payables: <strong>{renderTotal()}</strong></span>
+      <span className="text-sm">
+        Total Payables: <strong>₱{renderTotal()}</strong>
+      </span>
     </Card>
   );
 }

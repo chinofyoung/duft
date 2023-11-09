@@ -10,7 +10,7 @@ export default function Payables() {
 
   function renderTotal() {
     const payablesLength = parseInt(payables.length);
-    const expensesLength = parseInt(payables.length);
+    const expensesLength = parseInt(pending.length);
     let totalPayables = 0;
     let totalExpenses = 0;
 

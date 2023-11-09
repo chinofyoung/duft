@@ -7,7 +7,7 @@ export default function Earnings() {
   return (
     <span className="flex flex-col bg-slate-50 p-2 rounded-md">
       {/* sales - cost of sales - expenses */}
-      Retained Earnings: <strong className="text-lg">₱23,120</strong>
+      Retained Earnings: <strong className="text-lg">₱0</strong>
     </span>
   );
 }
