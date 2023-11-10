@@ -31,6 +31,7 @@ export default function RecordSales() {
     quantity: "",
     totalPrice: "",
     cash: "",
+    cost: "",
   });
 
   // checkbox
@@ -58,6 +59,7 @@ export default function RecordSales() {
         createdAt: serverTimestamp(),
         uid: user.uid,
         productId: newSale.productId,
+        cost: items[0].cost * newSale.quantity,
       });
       const itemRef = doc(db, "items", newSale.productId);
       await runTransaction(db, async (t) => {

@@ -12,24 +12,27 @@ import Receivables from "./permanent/receivable";
 import Cash from "./permanent/cash";
 import { PayablesContextProvider } from "../context/payables-context";
 import { ExpensesContextProvider } from "../context/expenses-context";
+import { SalesContextProvider } from "../context/sales-context";
 
 export default function PermanentStats() {
   return (
-    <div className="bg-slate-200 p-4">
-      <FlexCol>
-        <div className="grid grid-cols-2 gap-2 text-xs">
-          <Cash />
-          <Receivables />
-          <Capital />
-          <Earnings />
-          <ExpensesContextProvider>
-            <PayablesContextProvider>
-              <Payables />
-            </PayablesContextProvider>
-          </ExpensesContextProvider>
-          <Inventory />
-        </div>
-      </FlexCol>
-    </div>
+    <ExpensesContextProvider>
+      <PayablesContextProvider>
+        <SalesContextProvider>
+          <div className="bg-slate-200 p-4">
+            <FlexCol>
+              <div className="grid grid-cols-2 gap-2 text-xs">
+                <Cash />
+                <Receivables />
+                <Capital />
+                <Earnings />
+                <Payables />
+                <Inventory />
+              </div>
+            </FlexCol>
+          </div>
+        </SalesContextProvider>
+      </PayablesContextProvider>
+    </ExpensesContextProvider>
   );
 }

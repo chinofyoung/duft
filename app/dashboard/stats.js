@@ -22,9 +22,6 @@ export default function Stats() {
         <span className="text-xs">
           Bottles Sold: <strong>{bottlesSold}</strong>
         </span>
-        {/* <span className="text-xs">
-          Net Profit: <strong>15,240</strong>
-        </span> */}
       </div>
     );
   }

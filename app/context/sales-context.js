@@ -24,10 +24,13 @@ export const SalesContextProvider = ({ children }) => {
     });
   }, []);
 
+  const paid = sales.filter((sales) => sales.cash === true);
+
   return (
     <SalesContext.Provider
       value={{
         sales,
+        paid,
       }}
     >
       {children}
