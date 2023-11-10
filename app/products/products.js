@@ -37,8 +37,8 @@ export default function Products() {
               return (
                 <li
                   key={index}
-                  className={`flex flex-col items-start gap-2 p-2 rounded-md ${
-                    item.stock < 1 ? "bg-slate-100" : "bg-slate100"
+                  className={`flex flex-col items-start gap-2 p-2 rounded-md bg-slate-100 ${
+                    item.stock < 1 ? "opacity-50" : "opacity-100"
                   }`}
                 >
                   <Disclosure>
