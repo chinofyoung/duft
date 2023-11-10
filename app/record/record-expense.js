@@ -1,14 +1,11 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { message, Progress, Image } from "antd";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import {
   collection,
   addDoc,
   serverTimestamp,
-  query,
-  onSnapshot,
-  orderBy,
 } from "firebase/firestore";
 import { db, storage } from "../firebase";
 import { UserAuth } from "../context/auth-context";
@@ -22,6 +19,7 @@ import Expense from "./expense";
 import Button from "../layout/button";
 import { Tab } from "@headlessui/react";
 import { AiOutlineCloudUpload } from "react-icons/ai";
+import { ExpensesContext } from "../context/expenses-context";
 
 export default function RecordExpense() {
   let [isOpen, setIsOpen] = useState(false);
@@ -29,7 +27,7 @@ export default function RecordExpense() {
   const [downloadURL, setDownloadURL] = useState("");
   const [progressUpload, setProgressUpload] = useState(0);
   const { user } = UserAuth();
-  const [expenses, setExpenses] = useState([]);
+  const { pending, approved } = useContext(ExpensesContext);
   const [newExpense, setNewExpense] = useState({
     name: "",
     cost: "",
@@ -116,30 +114,12 @@ export default function RecordExpense() {
     }
   };
 
-  // read expenses from database
-  useEffect(() => {
-    const q = query(
-      collection(db, "expenses"),
-      orderBy("createdAt", "desc")
-      // limit(5)
-    );
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      let expenseArr = [];
-
-      querySnapshot.forEach((doc) => {
-        expenseArr.push({ ...doc.data(), id: doc.id });
-      });
-      setExpenses(expenseArr);
-      return () => unsubscribe();
-    });
-  }, []);
-
   function renderTotal() {
-    const expenseLength = parseInt(expenses.length);
+    const expenseLength = parseInt(approved.length);
     var totalExpenses = 0;
 
     for (let i = 0; i < expenseLength; i++) {
-      totalExpenses = parseInt(expenses[i]?.cost) + totalExpenses;
+      totalExpenses = parseInt(approved[i]?.cost) + totalExpenses;
     }
 
     return (
@@ -159,13 +139,6 @@ export default function RecordExpense() {
       </Padded>
     );
   }
-
-  const pending = expenses.filter(
-    (expense) => expense.approvedT === false || expense.approvedP === false
-  );
-  const approved = expenses.filter(
-    (expense) => expense.approvedT === true && expense.approvedP === true
-  );
 
   return (
     <FlexCol>

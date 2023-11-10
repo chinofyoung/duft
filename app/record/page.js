@@ -7,6 +7,7 @@ import Padded from "../layout/padded";
 import MainHeading from "../layout/main-heading";
 import { SalesContextProvider } from "../context/sales-context";
 import { ItemsContextProvider } from "../context/items-context";
+import { ExpensesContextProvider } from "../context/expenses-context";
 
 export default function Page() {
   return (
@@ -46,7 +47,9 @@ export default function Page() {
             </ItemsContextProvider>
           </Tab.Panel>
           <Tab.Panel>
-            <RecordExpense />
+            <ExpensesContextProvider>
+              <RecordExpense />
+            </ExpensesContextProvider>
           </Tab.Panel>
         </Tab.Panels>
       </Tab.Group>
