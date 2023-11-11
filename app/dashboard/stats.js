@@ -41,6 +41,12 @@ export default function Stats() {
         >
           Year
         </a>
+        <a
+          href=""
+          className="text-white bg-slate-400 px-4 py-1 flex items-center rounded-md"
+        >
+          All Time
+        </a>
       </div>
       <div className="grid grid-cols-2 gap-2">
         <div className="bg-lime-600 rounded-md p-4 shadow-sm">

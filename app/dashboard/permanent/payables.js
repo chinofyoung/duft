@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
-import Link from "next/link";
 import { BsArrowRight } from "react-icons/bs";
 import { PayablesContext } from "../../context/payables-context";
 import { ExpensesContext } from "../../context/expenses-context";
+import Link from "next/link";
 
 export default function Payables() {
   const { payables } = useContext(PayablesContext);

@@ -24,10 +24,12 @@ export const ExpensesContextProvider = ({ children }) => {
     });
   }, []);
 
+  // read pending expenses
   const pending = expenses.filter(
     (expense) => expense.approvedT === false || expense.approvedP === false
   );
 
+  // read approved expenses
   const approved = expenses.filter(
     (expense) => expense.approvedT === true && expense.approvedP === true
   );

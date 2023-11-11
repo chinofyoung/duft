@@ -26,7 +26,7 @@ export default function Footer() {
     },
   ];
   return (
-    <div className="fixed bottom-4 flex h-16 items-center text-white w-full p-4">
+    <div className="fixed bottom-4 flex h-16 items-center text-white w-full max-w-[480px] mx-auto p-4">
       <ul className="flex text-sm justify-around w-full bg-slate-800 rounded-xl">
         {nav.map(function (nav, index) {
           return (

@@ -4,7 +4,7 @@ import { db } from "../firebase";
 
 export default function Sales({ sale }) {
   const [user, setUser] = useState({});
-  
+
   useEffect(() => {
     onSnapshot(doc(db, "users", sale.uid), (snapshot) => {
       setUser(snapshot.data() || {});

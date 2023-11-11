@@ -6,12 +6,12 @@ import {
   GoogleAuthProvider,
 } from "firebase/auth";
 import { auth, db } from "../firebase";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc, updateDoc } from "firebase/firestore";
 
-const AuthContext = createContext();
+export const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState([null]);
 
   const googleSignIn = () => {
     const provider = new GoogleAuthProvider();
@@ -27,7 +27,8 @@ export const AuthContextProvider = ({ children }) => {
       setUser(currentUser);
 
       if (currentUser) {
-        await setDoc(doc(db, "users", currentUser.uid), {
+
+        await updateDoc(doc(db, "users", currentUser.uid), {
           displayName: currentUser.displayName,
           email: currentUser.email,
           photoURL: currentUser.photoURL,
