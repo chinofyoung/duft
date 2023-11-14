@@ -26,7 +26,7 @@ export default function Login() {
 
   return (
     <div className="bg-slate-800 absolute inset-0 z-50 flex flex-col items-center justify-center p-8 gap-12">
-      <img src="/static/logo.png" />
+      <img className="w-[250px]" src="/static/logo.png" />
       <div className="">
         {loading ? (
           <ThreeDots
@@ -42,10 +42,10 @@ export default function Login() {
         ) : !user ? (
           <button
             onClick={handleSignIn}
-            className="bg-white text-sm px-8 py-4 text-slate-800 font-bold rounded-md flex items-center gap-2"
+            className="bg-white text-sm px-5 py-2.5 text-slate-800 font-bold rounded-md flex items-center gap-2"
           >
             Sign in with Google
-            <FcGoogle className="text-xl" />
+            <FcGoogle className="text-sm" />
           </button>
         ) : null}
       </div>

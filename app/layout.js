@@ -33,7 +33,6 @@ export default function RootLayout({ children }) {
                   ) : (
                     <Login />
                   )}
-                  {console.log(context.user)}
                 </main>
               )}
             </AuthContext.Consumer>

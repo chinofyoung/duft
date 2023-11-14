@@ -1,6 +1,12 @@
 import Link from "next/link";
-import { AiFillSetting, AiOutlineDatabase } from "react-icons/ai";
-import { BsClipboard2Data, BsFillCartFill } from "react-icons/bs";
+import {
+  AiFillSetting,
+  AiOutlineDatabase,
+  AiOutlinePullRequest,
+  AiOutlineShoppingCart
+} from "react-icons/ai";
+import { BsClipboard2Data } from "react-icons/bs";
+import { LiaCcPaypal } from "react-icons/lia";
 
 export default function SmallLinks() {
   const menu = [
@@ -11,9 +17,21 @@ export default function SmallLinks() {
       disabled: false,
     },
     {
+      url: "/request",
+      label: "Request",
+      icon: <AiOutlinePullRequest />,
+      disabled: false,
+    },
+    {
+      url: "/payables",
+      label: "Payables",
+      icon: <LiaCcPaypal />,
+      disabled: false,
+    },
+    {
       url: "/products",
       label: "Products",
-      icon: <BsFillCartFill />,
+      icon: <AiOutlineShoppingCart />,
       disabled: false,
     },
     {
@@ -29,7 +47,7 @@ export default function SmallLinks() {
       disabled: true,
     },
   ];
-  
+
   return (
     <div className="grid grid-cols-4 gap-4">
       {menu.map(function (menu, index) {
