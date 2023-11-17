@@ -24,7 +24,7 @@ export default function Sales({ sale }) {
               sale.cash ? "bg-green-500" : "bg-orange-500"
             }`}
           >
-            {sale.cash ? "Cash" : "Receivable"}
+            {sale.cash ? "Paid" : "Receivable"}
           </span>
           <span className="font-bold">₱{sale.totalPrice}</span>
         </div>
@@ -38,6 +38,7 @@ export default function Sales({ sale }) {
         <div className="flex items-center ml-auto gap-2">
           <img className="w-6 h-6 rounded-full" src={user.photoURL} />
           <span className="font-bold">{user.displayName}</span>
+          {/* <span className="font-bold">{sale.uid}</span> */}
         </div>
       </div>
     </li>
