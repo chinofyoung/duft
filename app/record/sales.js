@@ -19,14 +19,14 @@ export default function Sales({ sale }) {
   // paid sales
   const paidSales = async (id) => {
     await updateDoc(doc(db, "sales", id), {
-      paid: true,
+      cash: true,
     });
   };
 
   // receivable sales
   const receivableSales = async (id) => {
     await updateDoc(doc(db, "sales", id), {
-      paid: false,
+      cash: false,
     });
   };
 
@@ -48,7 +48,7 @@ export default function Sales({ sale }) {
           <span className="font-bold">₱{sale.totalPrice}</span>
         </div>
         {/* tingtong approval */}
-        {user.uid === chinoId && (
+        {user.uid === martinId && (
           <div className="flex gap-2 mt-2">
             {sale.cash ? (
               <button
