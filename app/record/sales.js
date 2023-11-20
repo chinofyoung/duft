@@ -2,7 +2,6 @@ import { doc, onSnapshot, updateDoc } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { db } from "../firebase";
 import { UserAuth } from "../context/auth-context";
-import Button from "../layout/button";
 
 export default function Sales({ sale }) {
   const { user } = UserAuth();
@@ -20,14 +19,14 @@ export default function Sales({ sale }) {
   // paid sales
   const paidSales = async (id) => {
     await updateDoc(doc(db, "sales", id), {
-      cash: true,
+      paid: true,
     });
   };
 
   // receivable sales
   const receivableSales = async (id) => {
     await updateDoc(doc(db, "sales", id), {
-      cash: false,
+      paid: false,
     });
   };
 
@@ -49,21 +48,22 @@ export default function Sales({ sale }) {
           <span className="font-bold">₱{sale.totalPrice}</span>
         </div>
         {/* tingtong approval */}
-        {user.uid === martinId && (
+        {user.uid === chinoId && (
           <div className="flex gap-2 mt-2">
             {sale.cash ? (
-              <Button
+              <button
                 onClick={() => receivableSales(sale.id)}
-                small
-                label="Unpaid"
-              />
+                className="bg-red-500 py-1 px-2 text-xs rounded-md text-white"
+              >
+                Mark as Unpaid
+              </button>
             ) : (
-              <Button
+              <button
                 onClick={() => paidSales(sale.id)}
-                label="Paid"
-                small
-                styles="!bg-green-500"
-              />
+                className="bg-green-500 py-1 px-2 text-xs rounded-md text-white"
+              >
+                Mark as Paid
+              </button>
             )}
           </div>
         )}
@@ -75,9 +75,9 @@ export default function Sales({ sale }) {
           )}
         </span>
         <div className="flex items-center ml-auto gap-2">
-          <img className="w-6 h-6 rounded-full" src={user.photoURL} />
+          <img className="w-6 h-6 rounded-full" src={salesUser.photoURL} />
           <span className="font-bold capitalize">
-            {user.displayName?.split(" ").slice(0, 2).join(" ")}
+            {salesUser.displayName?.split(" ").slice(0, 2).join(" ")}
           </span>
         </div>
         <small className="font-mono text-slate-500">UID: {sale.uid}</small>
