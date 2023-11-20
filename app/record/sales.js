@@ -38,7 +38,7 @@ export default function Sales({ sale }) {
         <div className="flex items-center ml-auto gap-2">
           <img className="w-6 h-6 rounded-full" src={user.photoURL} />
           <span className="font-bold capitalize">
-            {user.displayName.split(" ").slice(0, 2).join(" ")}
+            {user.displayName?.split(" ").slice(0, 2).join(" ")}
           </span>
           {/* <span className="font-bold">{sale.uid}</span> */}
         </div>
