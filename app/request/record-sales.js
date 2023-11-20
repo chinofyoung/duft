@@ -70,7 +70,7 @@ export default function RecordSales() {
           t.update(itemRef, { stock: itemStock });
         }
       });
-      
+
       setNewSale({ product: "", quantity: "", totalPrice: "" });
     }
   };
@@ -84,20 +84,7 @@ export default function RecordSales() {
     }
 
     return (
-      <span className="text-base text-neutral-600 font-bold">
-        {totalSales}
-      </span>
-    );
-  }
-
-  if (!user) {
-    return (
-      <Padded>
-        <FlexCol>
-          <MainHeading>Record</MainHeading>
-          <SubHeading>Access Denied. Please Login</SubHeading>
-        </FlexCol>
-      </Padded>
+      <span className="text-base text-neutral-600 font-bold">{totalSales}</span>
     );
   }
 
@@ -142,7 +129,7 @@ export default function RecordSales() {
             className="text-sm border w-full px-5 py-2.5 rounded-md"
             type="number"
             placeholder="Quantity"
-          />  
+          />
           <Button onClick={addSale} label="Record" styles="w-full" />
         </FlexCol>
       </Card>
@@ -155,11 +142,13 @@ export default function RecordSales() {
       <Card>
         <SubHeading>Sub Inventory</SubHeading>
         <ul className="text-xs flex flex-col gap-1 text-slate-700 mt-2">
-          {!sales
-            ? "loading"
-            : sales.map((sale, index) => {
-                return <Sales sale={sale} key={`sales-${index}`} />;
-              })}
+          {!sales ? (
+            <p>loading...</p>
+          ) : (
+            sales.map((sale, index) => {
+              return <Sales sale={sale} key={`sales-${index}`} />;
+            })
+          )}
         </ul>
       </Card>
     </FlexCol>

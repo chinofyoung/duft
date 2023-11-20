@@ -19,11 +19,12 @@ import Sales from "./sales";
 import Button from "../layout/button";
 import { SalesContext } from "../context/sales-context";
 import { ItemsContext } from "../context/items-context";
+import { Flex } from "antd";
 
 export default function RecordSales() {
   const { user } = UserAuth();
   const [isOpen, setIsOpen] = useState(false);
-  const { sales } = useContext(SalesContext);
+  const { sales, showMonth, showToday } = useContext(SalesContext);
   const { items } = useContext(ItemsContext);
   const [checked, setChecked] = useState(false);
   const [newSale, setNewSale] = useState({
@@ -175,14 +176,16 @@ export default function RecordSales() {
       </Card>
 
       <Card>
-        <SubHeading>Sold Items</SubHeading>
-        <ul className="text-xs flex flex-col gap-1 text-slate-700 mt-2">
-          {!sales
-            ? "loading"
-            : sales.map((sale, index) => {
-                return <Sales sale={sale} key={`sales-${index}`} />;
-              })}
-        </ul>
+        <FlexCol>
+          <SubHeading>Sold Items</SubHeading>
+          <ul className="text-xs flex flex-col gap-1 text-slate-700 mt-2">
+            {!sales
+              ? "loading"
+              : sales.map((sale, index) => {
+                  return <Sales sale={sale} key={`sales-${index}`} />;
+                })}
+          </ul>
+        </FlexCol>
       </Card>
     </FlexCol>
   );

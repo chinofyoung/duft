@@ -1,7 +1,7 @@
 import { doc, onSnapshot, updateDoc } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
-import { Image } from "antd";
 import { db } from "../firebase";
+import { Image } from "antd";
 import { Disclosure } from "@headlessui/react";
 import {
   AiOutlineRight,
@@ -12,10 +12,10 @@ import { UserAuth } from "../context/auth-context";
 
 export default function Sales({ expense }) {
   const { user } = UserAuth();
+  const [expenseUser, setExpenseUser] = useState({});
   const pebenId = "tbuBqUOXP2TlqJmUM0VeYKwBEhY2";
   const chinoId = "UXQ7tG2XoqTmrbks3eUOlkBhNo92";
   const martinId = "aIrwQQEvjoN9aOuFsdyEd5hue5u2";
-  const [expenseUser, setExpenseUser] = useState({});
 
   useEffect(() => {
     const checkAuthentication = async () => {

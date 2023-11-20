@@ -1,15 +1,35 @@
-import { doc, onSnapshot } from "firebase/firestore";
+import { doc, onSnapshot, updateDoc } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { db } from "../firebase";
+import { UserAuth } from "../context/auth-context";
+import Button from "../layout/button";
 
 export default function Sales({ sale }) {
-  const [user, setUser] = useState({});
+  const { user } = UserAuth();
+  const [salesUser, setSalesUser] = useState({});
+  const pebenId = "tbuBqUOXP2TlqJmUM0VeYKwBEhY2";
+  const chinoId = "UXQ7tG2XoqTmrbks3eUOlkBhNo92";
+  const martinId = "aIrwQQEvjoN9aOuFsdyEd5hue5u2";
 
   useEffect(() => {
     onSnapshot(doc(db, "users", sale.uid), (snapshot) => {
-      setUser(snapshot.data() || {});
+      setSalesUser(snapshot.data() || {});
     });
-  }, [user.uid]);
+  }, [salesUser.uid]);
+
+  // paid sales
+  const paidSales = async (id) => {
+    await updateDoc(doc(db, "sales", id), {
+      cash: true,
+    });
+  };
+
+  // receivable sales
+  const receivableSales = async (id) => {
+    await updateDoc(doc(db, "sales", id), {
+      cash: false,
+    });
+  };
 
   return (
     <li className="flex justify-between items-start gap-2 bg-slate-100 p-2 rounded-md">
@@ -28,6 +48,25 @@ export default function Sales({ sale }) {
           </span>
           <span className="font-bold">₱{sale.totalPrice}</span>
         </div>
+        {/* tingtong approval */}
+        {user.uid === martinId && (
+          <div className="flex gap-2 mt-2">
+            {sale.cash ? (
+              <Button
+                onClick={() => receivableSales(sale.id)}
+                small
+                label="Unpaid"
+              />
+            ) : (
+              <Button
+                onClick={() => paidSales(sale.id)}
+                label="Paid"
+                small
+                styles="!bg-green-500"
+              />
+            )}
+          </div>
+        )}
       </div>
       <div className="flex flex-col items-end gap-2">
         <span className="font-bold">
@@ -40,8 +79,8 @@ export default function Sales({ sale }) {
           <span className="font-bold capitalize">
             {user.displayName?.split(" ").slice(0, 2).join(" ")}
           </span>
-          {/* <span className="font-bold">{sale.uid}</span> */}
         </div>
+        <small className="font-mono text-slate-500">UID: {sale.uid}</small>
       </div>
     </li>
   );

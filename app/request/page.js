@@ -9,7 +9,7 @@ import { ItemsContextProvider } from "../context/items-context";
 export default function Page() {
   return (
     <Padded>
-      <MainHeading>Record</MainHeading>
+      <MainHeading>Request Stocks</MainHeading>
       <div className="mt-4"></div>
       <ItemsContextProvider>
         <SalesContextProvider>
